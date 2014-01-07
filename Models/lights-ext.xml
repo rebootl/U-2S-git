@@ -1,0 +1,671 @@
+<?xml version="1.0"?>
+<!-- 
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+*****************************************************
+
+External lights for the U-2S (Rembrandt ready)
+============================
+
+- Beacon (two top and one bottom)
+- Nav lights (left, right and tail)
+- Landing lights
+
+"flares" here refers to the glow when looking at the light
+
+-->
+
+  <PropertyList>
+
+    <!-- model path -->
+    <path>lights-ext.ac</path>
+    
+    <!-- check wether Rembrandt is running -->
+    <animation>
+        <type>select</type>
+        <object-name>Landinglight-cone</object-name>
+        <object-name>Landinglight-halo</object-name>
+        <object-name>Nav-light-L-halo</object-name>
+        <object-name>Nav-light-R-halo</object-name>
+        <object-name>Nav-light-T-halo</object-name>
+        <object-name>Beacon-halo-top</object-name>
+        <object-name>Beacon-halo-bottom</object-name>
+        <condition>
+            <property>/sim/rendering/rembrandt/enabled</property>
+        </condition>
+    </animation>
+    
+    <animation>
+        <type>noshadow</type>
+        <object-name>Beacon-top-L-flare</object-name>
+        <object-name>Beacon-top-R-flare</object-name>
+        <object-name>Beacon-bottom-flare</object-name>
+        <object-name>Nav-light-L-flare</object-name>
+        <object-name>Nav-light-TL-flare</object-name>
+        <object-name>Nav-light-R-flare</object-name>
+        <object-name>Nav-light-TR-flare</object-name>
+        <object-name>Landinglight-flare-R</object-name>
+        <object-name>Landinglight-flare-L</object-name>
+    </animation>
+    
+    <effect>
+        <inherits-from>Effects/model-transparent</inherits-from>
+        <object-name>Beacon-bottom-flare</object-name>
+        <object-name>Beacon-top-L-flare</object-name>
+        <object-name>Beacon-top-R-flare</object-name>
+        <object-name>Nav-light-L-flare</object-name>
+        <object-name>Nav-light-TL-flare</object-name>
+        <object-name>Nav-light-R-flare</object-name>
+        <object-name>Nav-light-TR-flare</object-name>
+        <object-name>Landinglight-flare-R</object-name>
+        <object-name>Landinglight-flare-L</object-name>
+    </effect>
+    
+    <!-- range -->
+    <animation>
+        <type>range</type>
+        <min-m>0</min-m>
+        <max-m>20000</max-m>
+    </animation>
+    
+    <!-- Beacon -->
+    <!-- control -->
+    <animation>
+        <type>select</type>
+        <object-name>Beacon-top-L-emit</object-name>
+        <object-name>Beacon-top-R-emit</object-name>
+        <object-name>Beacon-bottom-emit</object-name>
+        <object-name>Beacon-top-L-flare</object-name>
+        <object-name>Beacon-top-R-flare</object-name>
+        <object-name>Beacon-bottom-flare</object-name>
+        <object-name>Beacon-halo-top</object-name>
+        <object-name>Beacon-halo-bottom</object-name>
+        <condition>
+            <property>/controls/lighting/beacon</property>
+        </condition>
+    </animation>
+    <animation>
+        <type>select</type>
+        <object-name>Beacon-top-L-emit</object-name>
+        <object-name>Beacon-top-L-flare</object-name>
+        <condition>
+            <property>/controls/lighting/beacon-top-l-flash</property>
+        </condition>
+    </animation>
+    <animation>
+        <type>select</type>
+        <object-name>Beacon-top-R-emit</object-name>
+        <object-name>Beacon-top-R-flare</object-name>
+        <condition>
+            <property>/controls/lighting/beacon-top-r-flash</property>
+        </condition>
+    </animation>
+    <animation>
+        <type>select</type>
+        <object-name>Beacon-bottom-emit</object-name>
+        <object-name>Beacon-bottom-flare</object-name>
+        <condition>
+            <property>/controls/lighting/beacon-bottom-flash</property>
+        </condition>
+    </animation>
+    <animation>
+        <type>select</type>
+        <object-name>Beacon-halo-top</object-name>
+        <condition>
+            <or>
+                <property>/controls/lighting/beacon-top-l-flash</property>
+                <property>/controls/lighting/beacon-top-r-flash</property>
+            </or>
+        </condition>
+    </animation>
+    <animation>
+        <type>select</type>
+        <object-name>Beacon-halo-bottom</object-name>
+        <condition>
+            <property>/controls/lighting/beacon-bottom-flash</property>
+        </condition>
+    </animation>
+    <!-- flares -->
+    <animation>
+        <type>translate</type>
+        <object-name>Beacon-top-L-flare</object-name>
+        <offset-m>3.55</offset-m>
+        <axis>
+            <x>2.7</x>
+            <y>-0.2</y>
+            <z>2.3</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>Beacon-top-R-flare</object-name>
+        <offset-m>3.55</offset-m>
+        <axis>
+            <x>2.7</x>
+            <y>0.2</y>
+            <z>2.3</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>Beacon-bottom-flare</object-name>
+        <offset-m>1.62</offset-m>
+        <axis>
+            <x>1.5</x>
+            <y>0.0</y>
+            <z>0.6</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>billboard</type>
+        <object-name>Beacon-top-L-flare</object-name>
+        <object-name>Beacon-top-R-flare</object-name>
+        <object-name>Beacon-bottom-flare</object-name>
+    </animation>-->
+    <animation>
+        <type>dist-scale</type>
+        <object-name>Beacon-top-L-flare</object-name>
+        <object-name>Beacon-top-R-flare</object-name>
+        <object-name>Beacon-bottom-flare</object-name>
+        <factor>0.01</factor>
+        <offset>1.0</offset>
+        <min>0.3</min>
+        <max>1000.0</max>
+    </animation>
+    <!-- left top halo -->
+        <animation>
+   <type>light</type>
+   <light-type>point</light-type>
+   <name>Beacon left top halo</name>
+   <object-name>Beacon-halo-top</object-name>
+   <nopreview/>
+   <position>
+     <x>2.7</x>
+     <y>-0.2</y>
+     <z>2.7</z>
+   </position>
+   <ambient>
+     <r>0.7</r>
+     <g>0.0</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </ambient>
+   <diffuse>
+     <r>0.7</r>
+     <g>0.0</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </diffuse>
+   <specular>
+     <r>0.7</r>
+     <g>0.0</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </specular>
+   <attenuation>
+     <c>1</c>
+     <l>0.02</l>
+     <q>0.5</q>
+   </attenuation>
+   <near-m>0.05</near-m>
+   <far-m>10.0</far-m>
+ </animation>
+    <!-- right top halo -->
+    <animation>
+   <type>light</type>
+   <light-type>point</light-type>
+   <name>Beacon right top halo</name>
+   <object-name>Beacon-halo-top</object-name>
+   <nopreview/>
+   <position>
+     <x>2.7</x>
+     <y>0.2</y>
+     <z>2.7</z>
+   </position>
+   <ambient>
+     <r>0.7</r>
+     <g>0.0</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </ambient>
+   <diffuse>
+     <r>0.7</r>
+     <g>0.0</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </diffuse>
+   <specular>
+     <r>0.7</r>
+     <g>0.0</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </specular>
+   <attenuation>
+     <c>1.0</c>
+     <l>0.02</l>
+     <q>0.5</q>
+   </attenuation>
+   <near-m>0.05</near-m>
+   <far-m>10.0</far-m>
+ </animation>
+    <!-- bottom halo -->
+    <animation>
+   <type>light</type>
+   <light-type>point</light-type>
+   <name>Beacon bottom halo</name>
+   <object-name>Beacon-halo-bottom</object-name>
+   <nopreview/>
+   <position>
+     <x>1.5</x>
+     <y>0.0</y>
+     <z>0.6</z>
+   </position>
+   <ambient>
+     <r>0.7</r>
+     <g>0.0</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </ambient>
+   <diffuse>
+     <r>0.7</r>
+     <g>0.0</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </diffuse>
+   <specular>
+     <r>0.7</r>
+     <g>0.0</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </specular>
+   <attenuation>
+     <c>1.0</c>
+     <l>0.02</l>
+     <q>0.5</q>
+   </attenuation>
+   <near-m>0.05</near-m>
+   <far-m>10.0</far-m>
+ </animation>
+    
+    <!-- Navigation lights -->
+    <!-- control -->
+    <animation>
+        <type>select</type>
+        <object-name>Wing-Lamp-L-emit</object-name>
+        <object-name>Wing-Lamp-R-emit</object-name>
+        <object-name>Wing-Lamp-T-emit</object-name>
+        <object-name>Nav-light-L-flare</object-name>
+        <object-name>Nav-light-R-flare</object-name>
+        <object-name>Nav-light-TL-flare</object-name>
+        <object-name>Nav-light-TR-flare</object-name>
+        <object-name>Nav-light-L-halo</object-name>
+        <object-name>Nav-light-R-halo</object-name>
+        <object-name>Nav-light-T-halo</object-name>
+        <condition>
+            <property>/controls/lighting/nav-lights</property>
+        </condition>
+    </animation>
+    <!-- flares -->
+    <animation>
+        <type>translate</type>
+        <object-name>Nav-light-L-flare</object-name>
+        <offset-m>15.9</offset-m>
+        <axis>
+            <x>0.3</x>
+            <y>-15.8</y>
+            <z>1.4</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>Nav-light-R-flare</object-name>
+        <offset-m>15.9</offset-m><!-- (15.865) -->
+        <axis>
+            <x>0.3</x>
+            <y>15.8</y>
+            <z>1.4</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>Nav-light-TL-flare</object-name>
+        <offset-m>9.99</offset-m>
+        <axis>
+            <x>8.2</x>
+            <y>-0.1</y>
+            <z>5.7</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>translate</type>
+        <object-name>Nav-light-TR-flare</object-name>
+        <offset-m>9.99</offset-m>
+        <axis>
+            <x>8.2</x>
+            <y>0.1</y>
+            <z>5.7</z>
+        </axis>
+    </animation>
+    <animation>
+        <type>billboard</type>
+        <object-name>Nav-light-L-flare</object-name>
+        <object-name>Nav-light-R-flare</object-name>
+        <object-name>Nav-light-TL-flare</object-name>
+        <object-name>Nav-light-TR-flare</object-name>
+    </animation>-->
+    <animation>
+        <type>dist-scale</type>
+        <object-name>Nav-light-L-flare</object-name>
+        <object-name>Nav-light-R-flare</object-name>
+        <object-name>Nav-light-TL-flare</object-name>
+        <object-name>Nav-light-TR-flare</object-name>
+        <factor>0.01</factor>
+        <offset>1.0</offset>
+        <min>0.3</min>
+        <max>1000.0</max>
+    </animation>
+    <!-- right wing halo (green) -->
+    <animation>
+   <type>light</type>
+   <light-type>point</light-type>
+   <name>Nav right wingtip halo red</name>
+   <object-name>Nav-light-R-halo</object-name>
+   <nopreview/>
+   <position>
+     <x>0.3</x>
+     <y>15.8</y>
+     <z>1.4</z>
+   </position>
+   <ambient>
+     <r>0.1</r>
+     <g>0.7</g>
+     <b>0.0</b>
+     <a>1.0</a>
+   </ambient>
+   <diffuse>
+     <r>0.1</r>
+     <g>0.7</g>
+     <b>0.0</b>
+     <a>1.0</a>
+   </diffuse>
+   <specular>
+     <r>0.1</r>
+     <g>0.7</g>
+     <b>0.0</b>
+     <a>1.0</a>
+   </specular>
+   <attenuation>
+     <c>1.0</c>
+     <l>0.5</l>
+     <q>2</q>
+   </attenuation>
+   <near-m>0.05</near-m>
+   <far-m>3.5</far-m>
+ </animation>
+    <!-- left wing halo (red) -->
+    <animation>
+   <type>light</type>
+   <light-type>point</light-type>
+   <name>Nav left wingtip halo green</name>
+   <object-name>Nav-light-L-halo</object-name>
+   <nopreview/>
+   <position>
+     <x>0.3</x>
+     <y>-15.8</y>
+     <z>1.4</z>
+   </position>
+   <ambient>
+     <r>0.7</r>
+     <g>0.1</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </ambient>
+   <diffuse>
+     <r>0.7</r>
+     <g>0.1</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </diffuse>
+   <specular>
+     <r>0.7</r>
+     <g>0.1</g>
+     <b>0.1</b>
+     <a>1.0</a>
+   </specular>
+   <attenuation>
+     <c>1.0</c>
+     <l>0.5</l>
+     <q>2</q>
+   </attenuation>
+   <near-m>0.05</near-m>
+   <far-m>3.5</far-m>
+ </animation>
+    <!-- left tail halo (white) -->
+    <animation>
+   <type>light</type>
+   <light-type>point</light-type>
+   <name>Nav left tail halo white</name>
+   <object-name>Nav-light-T-halo</object-name>
+   <nopreview/>
+   <position>
+     <x>8.2</x>
+     <y>-0.25</y>
+     <z>5.6</z>
+   </position>
+   <ambient>
+     <r>0.7</r>
+     <g>0.7</g>
+     <b>0.6</b>
+     <a>1.0</a>
+   </ambient>
+   <diffuse>
+     <r>0.7</r>
+     <g>0.7</g>
+     <b>0.6</b>
+     <a>1.0</a>
+   </diffuse>
+   <specular>
+     <r>0.7</r>
+     <g>0.7</g>
+     <b>0.6</b>
+     <a>1.0</a>
+   </specular>
+   <attenuation>
+     <c>1.0</c>
+     <l>0.02</l>
+     <q>0.5</q>
+   </attenuation>
+   <near-m>0.05</near-m>
+   <far-m>5.0</far-m>
+ </animation>
+    <!-- right tail halo (white) -->
+    <animation>
+   <type>light</type>
+   <light-type>point</light-type>
+   <name>Nav right tail halo white</name>
+   <object-name>Nav-light-T-halo</object-name>
+   <nopreview/>
+   <position>
+     <x>8.2</x>
+     <y>0.25</y>
+     <z>5.6</z>
+   </position>
+   <ambient>
+     <r>0.7</r>
+     <g>0.7</g>
+     <b>0.6</b>
+     <a>1.0</a>
+   </ambient>
+   <diffuse>
+     <r>0.7</r>
+     <g>0.7</g>
+     <b>0.6</b>
+     <a>1.0</a>
+   </diffuse>
+   <specular>
+     <r>0.7</r>
+     <g>0.7</g>
+     <b>0.6</b>
+     <a>1.0</a>
+   </specular>
+   <attenuation>
+     <c>1.0</c>
+     <l>0.02</l>
+     <q>0.5</q>
+   </attenuation>
+   <near-m>0.05</near-m>
+   <far-m>5.0</far-m>
+ </animation>
+    
+    <!-- Landing lights -->
+    <!-- control -->
+    <animation>
+        <type>select</type>
+        <object-name>Landinglight-cone</object-name>
+        <object-name>Landinglight-halo</object-name>
+        <object-name>Landinglight-flare-R</object-name>
+        <object-name>Landinglight-flare-L</object-name>
+        <object-name>Landing-Lights-emit</object-name>
+        <condition>
+            <and>
+                <property>/controls/lighting/landing-lights</property>
+                <equals>
+                    <property>/gear/gear/position-norm</property>
+                    <value>1</value>
+                </equals>
+            </and>
+        </condition>
+    </animation>
+    <!-- flare (the look of lights when looking at) -->
+    <animation>
+        <type>flash</type>
+        <object-name>Landinglight-flare-L</object-name>
+        <center>
+            <x-m>-1.52</x-m>
+            <y-m>-0.15</y-m>
+            <z-m>0.57</z-m>
+        </center>
+        <axis>
+            <x>-1.0</x>
+            <y>0.0</y>
+            <z>-0.1147</z>
+        </axis>
+        <power>2</power>
+        <factor>1</factor>
+        <offset>0</offset>
+        <two-sides type="bool">false</two-sides>
+        <min>0.01</min>
+        <max>1</max>
+    </animation>
+    <animation>
+        <type>flash</type>
+        <object-name>Landinglight-flare-R</object-name>
+        <center>
+            <x-m>-1.52</x-m>
+            <y-m>0.15</y-m>
+            <z-m>0.57</z-m>
+        </center>
+        <axis>
+            <x>-1.0</x>
+            <y>0.0</y>
+            <z>-0.1147</z>
+        </axis>
+        <power>2</power>
+        <factor>1</factor>
+        <offset>0</offset>
+        <two-sides type="bool">false</two-sides>
+        <min>0.01</min>
+        <max>1</max>
+    </animation>
+    <!-- spotlight cone -->
+    <animation>
+   <type>light</type>
+   <light-type>spot</light-type>
+   <name>Landinglight cone</name>
+   <object-name>Landinglight-cone</object-name>
+   <nopreview/>
+   <position>
+     <x>-1.66</x> <!-- (-1.66 / 0.0 / 0.56) -->
+     <y>0.0</y>
+     <z>0.56</z>
+   </position>
+   <direction>
+     <x>-1.0</x>
+     <y>0.0</y>
+     <z>-0.17633</z> <!-- (-0.1149, -6.5deg before / -15deg) -->
+   </direction>
+   <ambient>
+     <r>0.03</r>
+     <g>0.03</g>
+     <b>0.03</b>
+     <a>1.0</a>
+   </ambient>
+   <diffuse>
+     <r>0.7</r>
+     <g>0.7</g>
+     <b>0.6</b>
+     <a>1.0</a>
+   </diffuse>
+   <specular>
+     <r>0.7</r>
+     <g>0.7</g>
+     <b>0.7</b>
+     <a>1.0</a>
+   </specular>
+   <attenuation>
+     <c>1.0</c>
+     <l>0.002</l>
+     <q>0.00005</q>
+   </attenuation>
+   <exponent>30.0</exponent>
+   <cutoff>10.0</cutoff>
+   <near-m>6.0</near-m>
+   <far-m>300</far-m>
+ </animation>
+    <!-- light halo -->
+    <animation>
+   <type>light</type>
+   <light-type>point</light-type>
+   <name>Landinglight halo</name>
+   <object-name>Landinglight-halo</object-name>
+   <nopreview/>
+   <position>
+     <x>-1.66</x>
+     <y>0.0</y>
+     <z>0.56</z>
+   </position>
+   <ambient>
+     <r>0.03</r>
+     <g>0.03</g>
+     <b>0.03</b>
+     <a>1.0</a>
+   </ambient>
+   <diffuse>
+     <r>0.7</r>
+     <g>0.7</g>
+     <b>0.6</b>
+     <a>1.0</a>
+   </diffuse>
+   <specular>
+     <r>0.7</r>
+     <g>0.7</g>
+     <b>0.7</b>
+     <a>1.0</a>
+   </specular>
+   <attenuation>
+     <c>0.7</c>
+     <l>0.02</l>
+     <q>0.5</q>
+   </attenuation>
+   <near-m>0.1</near-m>
+   <far-m>4.5</far-m>
+ </animation>
+
+
+</PropertyList>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+*****************************************************
+
+Canopy submodel file
+(used for canopy jettison at eject only)
+
+-->
+
+
+<PropertyList>
+
+ <path>Canopy.ac</path>
+
+<!-- Model Offset -->
+
+ <offsets>
+   <pitch-deg>0</pitch-deg>   
+   <heading-deg>180</heading-deg>
+   <roll-deg>0</roll-deg>
+   <x-m>0.0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.05</z-m>
+ </offsets>
+
+<!-- Animation -->
+
+ <animation>
+  <enable-hot type="bool">false</enable-hot>
+ </animation>
+
+
+</PropertyList>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+*****************************************************
+
+Dropped pogo laying on the ground.
+
+-->
+
+
+<PropertyList>
+
+ <path>Pogo_R-dropped.ac</path>
+
+ <animation>
+  <enable-hot type="bool">false</enable-hot>
+ </animation>
+
+
+</PropertyList>

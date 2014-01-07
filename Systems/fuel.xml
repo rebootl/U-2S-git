@@ -1,0 +1,244 @@
+<?xml version="1.0"?>  
+ 
+<system name="fuel">
+<!--
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+*****************************************************
+
+    Basic JSBSim fuel system for the U-2S
+    ========================
+    
+    Specification is taken from the U-2 Utility Flight Handbook as well as recent cockpit photos (U-2S),
+    cutaway and other drawings (U-2R) found on the internet.
+    
+    Feeding
+    - tank 1-4 feed the sump tank (0), and only the sump tanks feeds the engine
+    - the main tanks start to feed when the aux tanks are empty (automatically) [^1]
+    - a simple control is used to simulate uneven feeding due to the roll attitude (could be elaborated)
+    
+    Cross transfer from left to right main tanks (and vice versa) (5gal/min)
+    Cross transfer from left to right aux tanks (and vice versa) (5gal/min)
+    
+    Dump for each tank (main and aux) (60gal/min)
+    
+    Cockpit controllable switches
+    *******************************
+    cross-transfer:
+    (three way switch: -1 from right to left / 0 off /  1 from left to right )
+    /controls/fuel/cross-transfer-main
+    /controls/fuel/cross-transfer-aux
+    
+    dump:
+    (four individual dump switches: on / off)
+    /controls/fuel/dump-main-l
+    /controls/fuel/dump-main-r
+    /controls/fuel/dump-aux-l
+    /controls/fuel/dump-aux-r
+    
+    Further there is an electrical shutoff valve between the sump tank and the engine used in emergency situations.
+    This is not implemented yet, evtl. this could be done in the engine section (?).
+    ==> /controls/engines/engine/cutoff can be used as this valve
+    
+    The tank pressurization is currently not simulated.
+    
+    Warning Light
+    ...
+    
+    [^1]: A little bit simplified. In reality there are float valves in the sump tank that trigger the main and/or aux tanks.
+    -->
+    
+    <!-- manual shutoff valves (not controllable from cockpit), should always be open (1) (could be removed though) -->
+    <property type="INT" value="1">propulsion/fuel/manual-sump-feed-main</property>
+    <property type="INT" value="1">propulsion/fuel/manual-sump-feed-aux</property>
+    
+    <!-- feeding the sump tank -->
+    <channel name="Feed sump">
+        
+        <!-- left main tank feed -->
+        <switch name="propulsion/tank[1]/feed-sump-pps">
+            <default value="-5" />
+            <test logic="OR" value="0">
+                propulsion/fuel/manual-sump-feed-main EQ 0 <!-- manual shutoff valve -->
+                propulsion/tank[1]/contents-lbs LE 0
+                propulsion/tank[0]/contents-lbs GE 670 <!-- 1 lb below capacity -->
+                attitude/phi-deg LT -0.5 <!-- add in a property due to roll and/or yaw attitude -->
+            </test>
+            <test logic="OR" value="0"> <!-- only start feeding when the aux tanks are empty -->
+                propulsion/tank[3]/contents-lbs GT 0
+                propulsion/tank[4]/contents-lbs GT 0
+            </test>
+        </switch>
+        
+        <!-- right main tank feed -->
+       <switch name="propulsion/tank[2]/feed-sump-pps">
+            <default value="-5" />
+            <test logic="OR" value="0">
+                propulsion/fuel/manual-sump-feed-main EQ 0
+                propulsion/tank[2]/contents-lbs LE 0
+                propulsion/tank[0]/contents-lbs GE 670 <!-- 1 lb below capacity -->
+                attitude/phi-deg GT 0.5 <!-- add in a property due to roll and/or yaw attitude -->
+            </test>
+            <test logic="OR" value="0"> <!-- only start feeding when the aux tanks are empty -->
+                propulsion/tank[3]/contents-lbs GT 0
+                propulsion/tank[4]/contents-lbs GT 0
+            </test>
+        </switch>
+
+        <!-- left aux tank feed -->
+        <switch name="propulsion/tank[3]/feed-sump-pps">
+            <default value="-5" />
+            <test logic="OR" value="0">
+                propulsion/fuel/manual-sump-feed-aux EQ 0
+                propulsion/tank[3]/contents-lbs LE 0
+                propulsion/tank[0]/contents-lbs GE 670 <!-- 1 lb below capacity -->
+                attitude/phi-deg LT -0.5 <!-- add in a property due to roll and/or yaw attitude -->
+            </test>
+        </switch>
+        
+        <!-- right aux tank feed -->
+        <switch name="propulsion/tank[4]/feed-sump-pps">
+            <default value="-5" />
+            <test logic="OR" value="0">
+                propulsion/fuel/manual-sump-feed-aux EQ 0
+                propulsion/tank[4]/contents-lbs LE 0
+                propulsion/tank[0]/contents-lbs GE 670 <!-- 1 lb below capacity -->
+                attitude/phi-deg GT 0.5 <!-- add in a property due to roll and/or yaw attitude -->
+            </test>
+        </switch>
+        
+        <!-- in flow to sump tank -->
+        <summer name="propulsion/fuel/flow-rate-sump-pps">
+            <input>-propulsion/tank[1]/feed-sump-pps</input>
+            <input>-propulsion/tank[2]/feed-sump-pps</input>
+            <input>-propulsion/tank[3]/feed-sump-pps</input>
+            <input>-propulsion/tank[4]/feed-sump-pps</input>
+            <output>propulsion/tank[0]/external-flow-rate-pps</output>
+        </summer>  
+ 
+    </channel>
+    
+    <!-- cross transfer system -->
+    <channel name="Cross Transfer System">
+                
+        <!-- main cross transfer -->
+        <switch name="propulsion/fuel/main-cross-transfer-flow-pps">
+            <default value="0" />
+            <!-- left to right -->
+            <test logic="AND" value="-0.56"> <!-- should be ca. 5gal/min -->
+                /controls/fuel/cross-transfer-main EQ 1 <!-- switch -->
+                propulsion/tank[1]/contents-lbs GT 0
+                propulsion/tank[2]/contents-lbs LT 8219.75
+            </test>
+            <!-- right to left -->
+            <test logic="AND" value="0.56">
+                /controls/fuel/cross-transfer-main EQ -1 <!-- switch -->
+                propulsion/tank[2]/contents-lbs GT 0
+                propulsion/tank[1]/contents-lbs LT 8219.75
+            </test>
+        </switch>
+        
+        <!-- aux cross transfer -->
+        <switch name="propulsion/fuel/aux-cross-transfer-flow-pps">
+            <default value="0" />
+            <!-- left to right -->
+            <test logic="AND" value="-0.56"> <!-- should be ca. 5gal/min -->
+                /controls/fuel/cross-transfer-aux EQ 1 <!-- switch -->
+                propulsion/tank[3]/contents-lbs GT 0
+                propulsion/tank[4]/contents-lbs LT 1342
+            </test>
+            <!-- right to left -->
+            <test logic="AND" value="0.56">
+                /controls/fuel/cross-transfer-aux EQ -1 <!-- switch -->
+                propulsion/tank[4]/contents-lbs GT 0
+                propulsion/tank[3]/contents-lbs LT 1342
+            </test>
+        </switch>
+        
+    </channel>
+    
+    <!-- fuel dump system -->
+    <channel name="Fuel Dump System">
+        
+        <!-- tank 1 -->
+        <switch name="propulsion/tank[1]/dump-pps">
+            <default value="0" />
+            <test logic="AND" value="-6.71"> <!-- should be ca 60gal/min -->
+                /controls/fuel/dump-main-l EQ 1
+                propulsion/tank[1]/contents-lbs GT 0
+            </test>
+        </switch>
+        
+        <!-- tank 2 -->
+        <switch name="propulsion/tank[2]/dump-pps">
+            <default value="0" />
+            <test logic="AND" value="-6.71"> <!-- should be ca 60gal/min -->
+                /controls/fuel/dump-main-r EQ 1
+                propulsion/tank[2]/contents-lbs GT 0
+            </test>
+        </switch>
+        
+        <!-- tank 3 -->
+        <switch name="propulsion/tank[3]/dump-pps">
+            <default value="0" />
+            <test logic="AND" value="-6.71"> <!-- should be ca 60gal/min -->
+                /controls/fuel/dump-aux-l EQ 1
+                propulsion/tank[3]/contents-lbs GT 0
+            </test>
+        </switch>
+        
+        <!-- tank 4 -->
+        <switch name="propulsion/tank[4]/dump-pps">
+            <default value="0" />
+            <test logic="AND" value="-6.71"> <!-- should be ca 60gal/min -->
+                /controls/fuel/dump-aux-r EQ 1
+                propulsion/tank[4]/contents-lbs GT 0
+            </test>
+        </switch>
+        
+    </channel>
+    
+    <!-- tank sums -->
+    <channel name="Main and aux tanks">
+        
+        <!-- tank 1 -->
+        <summer name="propulsion/fuel/flow-rate-main-l-pps">
+            <input>propulsion/tank[1]/feed-sump-pps</input>
+            <input>propulsion/fuel/main-cross-transfer-flow-pps</input>
+            <input>propulsion/tank[1]/dump-pps</input>
+            <output>propulsion/tank[1]/external-flow-rate-pps</output>
+        </summer>
+        
+        <!-- tank 2 -->
+        <summer name="propulsion/fuel/flow-rate-main-r-pps">
+            <input>propulsion/tank[2]/feed-sump-pps</input>
+            <input>-propulsion/fuel/main-cross-transfer-flow-pps</input>
+            <input>propulsion/tank[2]/dump-pps</input>
+            <output>propulsion/tank[2]/external-flow-rate-pps</output>
+        </summer>
+        
+        <!-- tank 3 -->
+        <summer name="propulsion/fuel/flow-rate-aux-l-pps">
+            <input>propulsion/tank[3]/feed-sump-pps</input>
+            <input>propulsion/fuel/aux-cross-transfer-flow-pps</input>
+            <input>propulsion/tank[3]/dump-pps</input>
+            <output>propulsion/tank[3]/external-flow-rate-pps</output>
+        </summer>
+        
+        <!-- tank 4 -->
+        <summer name="propulsion/fuel/flow-rate-aux-r-pps">
+            <input>propulsion/tank[4]/feed-sump-pps</input>
+            <input>-propulsion/fuel/aux-cross-transfer-flow-pps</input>
+            <input>propulsion/tank[4]/dump-pps</input>
+            <output>propulsion/tank[4]/external-flow-rate-pps</output>
+        </summer>
+        
+    </channel>
+
+</system>

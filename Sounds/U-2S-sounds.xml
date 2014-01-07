@@ -1,0 +1,496 @@
+<?xml version="1.0"?>
+<!--
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+*****************************************************
+
+Sound, copied from B-2 and adapted for the U-2S, 05/18/11
+using default FG sounds for now
+
+reworked 2013-12-17
+basic reason: short stops in engine sound
+solution: evtl. this was due to badly formed conditions
+- corrected conditions
+- added startup/windmilling section
+- splitted basic internal and external engine sound (the idea behind this
+  was that the external sound should be louder than the internal, works more or less well)
+- reworked pitch, volume, position and orientation values
+- added effectiveness distances
+- merged gear lock (in-out), rumble and squeal (front-tail) and surfaces (left-right) sounds
+
+-->
+
+<PropertyList>
+    
+ <fx>
+ 
+<!-- Engine -->
+ 
+    <engine-startup>
+        <name>Engine startup or windmilling - internal and external</name>
+        <path>Sounds/whine.wav</path>
+        <mode>looped</mode>
+        <condition>
+            <not>
+                <property>/engines/engine/running</property>
+            </not>
+        </condition>
+        <pitch>
+            <property>/engines/engine[0]/n1</property>
+            <factor>0.05</factor>
+            <offset>1.0</offset>
+        </pitch>
+        <volume>
+            <property>/engines/engine[0]/n1</property>
+            <factor>0.02</factor>
+        </volume>
+        <position>
+            <x>0.0</x>
+            <y>0.0</y>
+            <z>1.5</z>
+        </position>
+        <reference-dist>3.0</reference-dist>
+        <max-dist>30.0</max-dist>
+    </engine-startup>
+    
+    <engine-run-int>
+        <name>Engine running internal</name>
+        <path>Sounds/jet.wav</path>
+        <mode>looped</mode>
+        <condition>
+            <and>
+                <property>/sim/current-view/internal</property>
+                <property>/engines/engine[0]/running</property>
+            </and>
+        </condition>
+        <!-- better w/o pitch (use pitch only for whine)
+        <pitch>
+            <property>/engines/engine[0]/n1</property>
+            <factor>0.1</factor>
+        </pitch>
+        -->
+        <volume>
+            <property>/engines/engine[0]/thrust_lb</property>
+            <factor>0.0004</factor>
+        </volume>
+        <position>
+            <x>0.0</x>
+            <y>0.0</y>
+            <z>1.5</z>
+        </position>
+    </engine-run-int>
+    
+    <engine-whine-int>
+        <name>Engine whine internal</name>
+        <path>Sounds/whine.wav</path>
+        <mode>looped</mode>
+        <condition>
+            <and>
+               <property>/sim/current-view/internal</property>
+               <property>/engines/engine[0]/running</property>
+            </and>
+        </condition>
+        <position>
+            <x>0.0</x>
+            <y>0.0</y>
+            <z>1.5</z>
+        </position>
+        <pitch>
+            <property>/engines/engine[0]/n1</property>
+            <property>0.03</property>
+        </pitch>
+        <volume>
+            <property>/engines/engine[0]/n1</property>
+            <factor>0.005</factor>
+        </volume>
+    </engine-whine-int>
+    
+    <engine-run-ext>
+        <name>Engine running external</name>
+        <path>Sounds/jet.wav</path>
+        <mode>looped</mode>
+        <condition>
+            <and>
+                <not>
+                    <property>/sim/current-view/internal</property>
+                </not>
+                <property>/engines/engine[0]/running</property>
+            </and>
+        </condition>
+        <position>
+            <x>7.0</x>
+            <y>0.0</y>
+            <z>1.5</z>
+        </position>
+        <orientation>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+            <inner-angle>90.0</inner-angle>
+            <outer-angle>180.0</outer-angle>
+            <outer-gain>0.6</outer-gain>
+        </orientation>
+        <!--
+        <pitch>
+            <property>/engines/engine[0]/n1</property>
+            <factor>0.001</factor>
+        </pitch>
+        -->
+        <volume>
+            <property>/engines/engine[0]/thrust_lb</property>
+            <factor>0.0006</factor>
+        </volume>
+        <reference-dist>35.0</reference-dist>
+        <max-dist>3500.0</max-dist>
+    </engine-run-ext>
+    
+    <engine-whine-ext>
+        <name>Engine whine external</name>
+        <path>Sounds/turbojet_fan.wav</path>
+        <mode>looped</mode>
+        <condition>
+            <and>
+                <not>
+                    <property>/sim/current-view/internal</property>
+                </not>
+                <property>/engines/engine[0]/running</property>
+            </and>
+        </condition>
+        <position>
+            <x>7.0</x>
+            <y>0.0</y>
+            <z>1.5</z>
+        </position>
+        <orientation>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+            <inner-angle>90.0</inner-angle>
+            <outer-angle>180.0</outer-angle>
+            <outer-gain>0.7</outer-gain>
+        </orientation>
+        <pitch>
+            <property>/engines/engine[0]/n1</property>
+            <factor>0.003</factor>
+        </pitch>
+        <volume>
+            <property>/engines/engine[0]/n1</property>
+            <factor>0.08</factor>
+        </volume>
+        <reference-dist>35.0</reference-dist>
+        <max-dist>3500.0</max-dist>
+    </engine-whine-ext>
+    
+    <!-- Rumble -->
+    
+    <rumble>
+        <name>Gear rumble</name>
+        <path>Sounds/rumble.wav</path>
+        <mode>looped</mode>
+        <condition>
+            <or>
+               <property>/gear/gear[0]/wow</property>
+               <property>/gear/gear[1]/wow</property>
+            </or>
+        </condition>
+        <position>
+            <x>0.0</x>
+            <y>0.0</y>
+            <z>0.0</z>
+        </position>
+        <volume>
+            <property>/velocities/groundspeed-kt</property>
+            <factor>0.04</factor>
+            <min>0.0</min>
+            <max>1.0</max>
+        </volume>
+        <reference-dist>2.0</reference-dist>
+        <max-dist>20.0</max-dist>
+    </rumble>
+    
+    <!-- Front Gear In-Out -->
+    
+    <gear-t-f>
+        <name>Gear transit front</name>
+        <mode>in-transit</mode>
+        <path>Sounds/gear.wav</path>
+        <property>/gear/gear[0]/position-norm</property>
+        <position>
+            <x>-1.5</x>
+            <y>0.0</y>
+            <z>1.0</z>
+        </position>
+        <pitch>
+            <internal>dt_play</internal>
+            <offset>0.8</offset>
+            <factor>0.001</factor>
+        </pitch>
+        <reference-dist>2.0</reference-dist>
+        <max-dist>15.0</max-dist>
+    </gear-t-f>
+    
+    <gear-l-f>
+        <name>Gear lock front</name>
+        <path>Sounds/gear-lck.wav</path>
+        <condition>
+            <or>
+                <equals>
+                    <property>/gear/gear[0]/position-norm</property>
+                    <value>0</value>
+                </equals>
+                <equals>
+                    <property>/gear/gear[0]/position-norm</property>
+                    <value>1</value>
+                </equals>
+            </or>
+        </condition>
+        <position>
+            <x>-1.5</x>
+            <y>0.0</y>
+            <z>1.0</z>
+        </position>
+        <reference-dist>2.0</reference-dist>
+        <max-dist>15.0</max-dist>
+    </gear-l-f>
+    <!--
+    <gear>
+        <name>Gear Lock Pos 1 front</name>
+        <path>Sounds/gear-lck.wav</path>
+        <condition>
+            <equals>
+                <property>/gear/gear[0]/position-norm</property>
+                <value>1</value>
+            </equals>
+        </condition>
+        <position>
+            <x>-1.5</x>
+            <y>0.0</y>
+            <z>1.0</z>
+        </position>
+        <reference-dist>2.0</reference-dist>
+        <max-dist>15.0</max-dist>
+    </gear>
+    -->
+    <!-- Tail Gear In-Out -->
+    
+    <gear-t-t>
+        <name>Gear transit tail</name>
+        <mode>in-transit</mode>
+        <path>Sounds/gear.wav</path>
+        <property>/gear/gear[1]/position-norm</property>
+        <position>
+            <x>5.0</x>
+            <y>0.0</y>
+            <z>1.0</z>
+        </position>
+        <pitch>
+            <internal>dt_play</internal>
+            <offset>0.8</offset>
+            <factor>0.001</factor>
+        </pitch>
+        <reference-dist>2.0</reference-dist>
+        <max-dist>15.0</max-dist>
+    </gear-t-t>
+    
+    <gear-l-t>
+        <name>Gear lock tail</name>
+        <path>Sounds/gear-lck.wav</path>
+        <condition>
+            <or>
+                <equals>
+                    <property>/gear/gear[1]/position-norm</property>
+                    <value>0</value>
+                </equals>
+                <equals>
+                    <property>/gear/gear[1]/position-norm</property>
+                    <value>1</value>
+                </equals>
+            </or>
+        </condition>
+        <position>
+            <x>5.0</x>
+            <y>0.0</y>
+            <z>1.0</z>
+        </position>
+        <reference-dist>2.0</reference-dist>
+        <max-dist>15.0</max-dist>
+    </gear-l-t>
+    <!--
+    <gear>
+        <name>Gear Lock Pos 1 tail</name>
+        <path>Sounds/gear-lck.wav</path>
+        <condition>
+            <equals>
+                <property>/gear/gear[1]/position-norm</property>
+                <value>1</value>
+            </equals>
+        </condition>
+        <position>
+            <x>5.0</x>
+            <y>0.0</y>
+            <z>1.0</z>
+        </position>
+        <reference-dist>2.0</reference-dist>
+        <max-dist>15.0</max-dist>
+    </gear>
+    -->
+    <!-- Squeal -->
+    
+    <squeal>
+        <name>Gear squeal</name>
+        <path>Sounds/squeal.wav</path>
+        <condition>
+            <or>
+                <property>/gear/gear[0]/wow</property>
+                <property>/gear/gear[1]/wow</property>
+            </or>
+        </condition>
+        <volume>
+            <property>/velocities/speed-down-fps</property>
+            <factor>0.05</factor>
+        </volume>
+        <volume>
+            <property>/velocities/airspeed-kt</property>
+            <factor>0.05</factor>
+        </volume>
+        <pitch>
+            <property>/velocities/airspeed-kt</property>
+            <factor>0.0025</factor>
+            <offset>1.5</offset>
+        </pitch>
+        <position>
+            <x>0.0</x>
+            <y>0.0</y>
+            <z>0.0</z>
+        </position>
+        <reference-dist>10.0</reference-dist>
+        <max-dist>50.0</max-dist>
+    </squeal>
+
+    <!-- Flaps -->
+    
+    <flap>
+        <name>Flaps</name>
+        <mode>in-transit</mode>
+        <path>Sounds/flaps.wav</path>
+        <property>/surface-positions/flap-pos-norm</property>
+        <!--
+        <volume>
+            <property>/sim/sound/ext-volume</property>
+        </volume>
+        -->
+        <volume>
+            <factor>0.75</factor>
+        </volume>
+        <position>
+            <x>1.0</x>
+            <y>0</y>
+            <z>1.4</z>
+        </position>
+        <reference-dist>2.0</reference-dist>
+        <max-dist>15.0</max-dist>
+    </flap>
+    
+    <!-- Spoilers -->
+    
+    <spoiler>
+        <name>Spoilers</name>
+        <mode>in-transit</mode>
+        <path>Sounds/flaps.wav</path>
+        <property>/surface-positions/spoilers-pos-norm</property>
+        <!--
+        <volume>
+            <property>/sim/sound/ext-volume</property>
+        </volume>
+        -->
+        <volume>
+            <factor>0.75</factor>
+        </volume>
+        <position>
+            <x>1.0</x>
+            <y>0</y>
+            <z>1.4</z>
+        </position>
+        <reference-dist>2.0</reference-dist>
+        <max-dist>15.0</max-dist>
+    </spoiler>
+    
+    <!-- Speedbrake -->
+    
+    <speedbrake>
+        <name>Speedbrake</name>
+        <mode>in-transit</mode>
+        <path>Sounds/flaps.wav</path>
+        <property>/surface-positions/speedbrake-pos-norm</property>
+        <!--
+        <volume>
+            <property>/sim/sound/ext-volume</property>
+        </volume>
+        -->
+        <volume>
+            <factor>0.75</factor>
+        </volume>
+        <position>
+            <x>4.0</x>
+            <y>0</y>
+            <z>1.2</z>
+        </position>
+        <reference-dist>2.0</reference-dist>
+        <max-dist>15.0</max-dist>
+    </speedbrake>
+    
+<!-- Stall warning, switched off for now ....
+    
+  <stall>
+   <name>stall</name>
+   <path>Sounds/stall.wav</path>
+   <property>/sim/alarms/stall-warning</property>
+   <volume>
+    <property>/velocities/airspeed-kt</property>
+    <min>50.0</min>
+   </volume>
+  </stall>
+
+-->
+
+
+<!-- Wind ?? to test...., switched off for now.....
+
+  <wind>
+   <name>wind</name>
+   <mode>looped</mode>
+   <path>Sounds/wind.wav</path>
+   <property>/velocities/airspeed-kt</property>
+   <volume>
+    <property>/velocities/airspeed-kt</property>
+    <factor>0.002</factor>
+    <min>0.03</min>
+    <max>0.25</max>
+   </volume>
+   <pitch>
+    <property>/velocities/airspeed-kt</property>
+    <factor>0.01</factor>
+    <offset>1.25</offset>
+   </pitch>
+  </wind>
+
+-->
+
+<!-- no binding yet?
+
+  <click>
+   <name>click</name>
+   <path>Sounds/click.wav</path>
+  </click>
+
+-->
+
+ </fx>
+
+</PropertyList>

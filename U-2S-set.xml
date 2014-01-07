@@ -1,0 +1,461 @@
+<?xml version="1.0"?>
+<!--
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2011, 2012, 2013, 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+Started April 11, 2011
+
+*****************************************************
+
+-set file
+
+-->
+
+<PropertyList>
+    <sim>
+    
+        <description>Lockheed U-2S</description>
+        
+        <aircraft-version>20140107</aircraft-version>
+        
+        <status>alpha</status>
+        <rating>
+            <FDM type="int">1</FDM>
+            <systems type="int">1</systems>
+            <cockpit type="int">0</cockpit>
+            <model type="int">2</model>
+        </rating>
+        
+        <author>Cem Aydin</author>
+        
+        <flight-model>jsb</flight-model>
+        
+        <aero>U-2S-jsbsim-test</aero>
+        
+        <startup>
+            <splash-texture>Aircraft/U-2S/U-2S-splash.png</splash-texture>
+        </startup>
+        
+        <!-- Main Model -->
+        
+        <model>
+            <path>Aircraft/U-2S/Models/U-2S-model.xml</path>
+        </model>
+        
+        <!-- Pilot View -->
+        
+        <view>
+            <internal archive="y">true</internal>
+            <config>
+                <x-offset-m archive="y">0.0</x-offset-m>
+                <y-offset-m archive="y">2.02</y-offset-m>
+                <z-offset-m archive="y">-5.68</z-offset-m>
+                <pitch-offset-deg>-3</pitch-offset-deg>
+            </config>
+        </view>
+        
+        <!-- Scope View -->
+        
+        <view n="1001">
+            <name>Drift Scope View</name>
+            <type>lookfrom</type>
+            <internal archive="y">true</internal>
+            <config>
+                <from-model type="bool">true</from-model>
+                <from-model-idx type="int">0</from-model-idx>
+                <default-field-of-view-deg>30.0</default-field-of-view-deg>
+                <x-offset-m archive="y">0.0</x-offset-m>
+                <y-offset-m archive="y">0.63</y-offset-m>
+                <z-offset-m archive="y">-6.6</z-offset-m>
+                <pitch-offset-deg>-90</pitch-offset-deg>
+                <!-- <ground-level-nearplane-m type="double">0.5f</ground-level-nearplane-m> -->
+            </config>
+        </view>
+        
+        <!-- Test View for Ejection Seat 1) Look at pilot -->
+        
+        <view n="901">
+            <name>Test View for Ejection Seat - Look at pilot</name>
+            <type>lookat</type>
+            <internal archive="y">false</internal>
+            <config>
+                <at-model type="bool">false</at-model>
+                <!--<at-model-idx type="int">0</at-model-idx>-->
+                
+                <eye-lat-deg-path>eject/latitude</eye-lat-deg-path>
+                <eye-lon-deg-path>eject/longitude</eye-lon-deg-path>
+                <eye-alt-ft-path>eject/altitude-ft</eye-alt-ft-path>
+                <eye-heading-deg-path>eject/heading</eye-heading-deg-path>
+                <eye-roll-deg-path>eject/roll</eye-roll-deg-path>
+                <eye-pitch-deg-path>eject/pitch</eye-pitch-deg-path>
+                
+                <target-lat-deg-path>eject/latitude</target-lat-deg-path>
+                <target-lon-deg-path>eject/longitude</target-lon-deg-path>
+                <target-alt-ft-path>eject/altitude-ft</target-alt-ft-path>
+                
+                <!-- Shift the view to center on the pilot - not on the model/fdm center -->
+                <target-x-offset-m archive="y">0.0</target-x-offset-m>
+                <target-y-offset-m archive="y">2.3</target-y-offset-m>
+                <target-z-offset-m archive="y">-5.7</target-z-offset-m>
+                
+                <x-offset-m archive="y">0.0</x-offset-m>
+                <y-offset-m archive="y">6</y-offset-m>
+                <z-offset-m archive="y">10</z-offset-m>
+            </config>
+        </view>
+        
+        <!-- Test View for Ejection Seat 2) Look from pilot -->
+        
+        <view n="902">
+            <name>Test View for Ejection Seat - Look from pilot</name>
+            <type>lookfrom</type>
+            <internal archive="y">true</internal>
+            <config>
+                <at-model type="bool">false</at-model>
+                <!--<at-model-idx type="int">0</at-model-idx>-->
+                <eye-lat-deg-path>eject/latitude</eye-lat-deg-path>
+                <eye-lon-deg-path>eject/longitude</eye-lon-deg-path>
+                <eye-alt-ft-path>eject/altitude-ft</eye-alt-ft-path>
+                <eye-heading-deg-path>eject/heading</eye-heading-deg-path>
+                <eye-roll-deg-path>eject/roll</eye-roll-deg-path>
+                <eye-pitch-deg-path>eject/pitch</eye-pitch-deg-path>
+                <!--
+                <target-lat-deg-path>/position/latitude-deg</target-lat-deg-path>
+                <target-lon-deg-path>/position/longitude-deg</target-lon-deg-path>
+                <target-alt-ft-path>/position/altitude-deg</target-alt-ft-path>
+                -->
+                <!-- Shift the view to center on the pilot - not on the model/fdm center -->
+                <x-offset-m archive="y">0.0</x-offset-m>
+                <y-offset-m archive="y">2.06</y-offset-m>
+                <z-offset-m archive="y">-5.7</z-offset-m>
+            </config>
+        </view>
+        
+        <!-- Shift the camera target point back -->
+        
+        <view n="1">
+            <config>
+                <target-z-offset-m archive="y" type="double">0.0</target-z-offset-m>
+            </config>
+        </view>
+        
+        <view n="2">
+            <config>
+                <target-z-offset-m archive="y" type="double">5.0</target-z-offset-m>
+            </config>
+        </view>
+        <!-- isn't this the tower view or so ? check this....
+        <view n="3">
+            <config>
+                <target-z-offset-m archive="y" type="double">5.0</target-z-offset-m>
+            </config>
+        </view>
+        -->
+        
+        <!-- Flaps Settings, to be corrected -->
+        <!--
+   <flaps>
+    <setting>0.05</setting>
+    <setting>0.10</setting>
+    <setting>0.15</setting>
+    <setting>0.20</setting>
+    <setting>0.25</setting>
+   </flaps>
+-->
+<!-- Spoiler Settings, to be corrected -->
+<!--
+   <spoilers>
+    <setting>0.0</setting>
+    <setting>0.2</setting>
+    <setting>0.4</setting>
+    <setting>0.7</setting>
+    <setting>1.0</setting>
+   </spoilers>
+-->
+<!-- Aircraft Help Menu entries -->
+
+        <help>
+            <title>Lockheed U-2S</title>
+            
+            <key>
+                <name>C</name>
+                <desc>Open/close canopy</desc>
+            </key>
+            
+            <key>
+                <name>}</name>
+                <desc>Set throttle to idle (unset from OFF)</desc>
+            </key>
+            
+            <key>
+                <name>{</name>
+                <desc>Set throttle to OFF</desc>
+            </key>
+            
+            <key>
+                <name>R</name>
+                <desc>Reset pogos</desc>
+            </key>
+            
+            <key>
+                <name>E</name>
+                <desc>Eject (experimental, in development)</desc>
+            </key>
+            
+     <!-- To implement later...
+     <key>
+      <name>j/k</name>
+      <desc>decrease/increase spoilers</desc>
+     </key>
+     
+     <key>
+      <name>??</name>
+      <desc>decrease/increase speedbrake</desc>
+     </key>
+     -->
+                
+                            
+            <text>The famous spyplane for FlightGear.
+
+Please see http://wiki.flightgear.org/Lockheed_U-2S for documentation.
+
+Have Fun!</text>
+            </help>
+
+        <!-- Sound -->
+        
+        <sound>
+            <audible>true</audible>
+            <path>Aircraft/U-2S/Sounds/U-2S-sounds.xml</path>
+        </sound>
+        
+        <!-- Adding Submodels (Pogos) -->
+        
+        <submodels>
+            <serviceable type="bool">true</serviceable>
+            <path>Aircraft/U-2S/Models/Submodels.xml</path>
+        </submodels>
+        
+    <!-- End of sim Part -->
+    </sim>
+    
+    <!-- Initial Settings -->
+    
+    <!-- start the engine -->
+    <engines>
+        <engine n="0">
+            <running>false</running>
+        </engine>
+    </engines>
+    
+    <controls>
+        <gear>
+            <brake-parking>1</brake-parking>
+            <nose-wheel-steering>0</nose-wheel-steering>
+        </gear>
+        <!-- JSBSim fuel system cockpit controls -->
+        <fuel>
+            <cross-transfer-main type="int">0</cross-transfer-main>
+            <cross-transfer-aux type="int">0</cross-transfer-aux>
+            <dump-main-l type="bool">0</dump-main-l>
+            <dump-main-r type="bool">0</dump-main-r>
+            <dump-aux-l type="bool">0</dump-aux-l>
+            <dump-aux-r type="bool">0</dump-aux-r>
+        </fuel>
+        <!-- throttle off override -->
+        <engines>
+            <throttle-off type="bool">1</throttle-off>
+        </engines>
+        <!-- beacon flash auto control -->
+        <lighting>
+            <beacon-top-l-flash type="bool">0</beacon-top-l-flash>
+            <beacon-top-r-flash type="bool">0</beacon-top-r-flash>
+            <beacon-bottom-flash type="bool">0</beacon-bottom-flash>
+        </lighting>
+        <!-- pushed props -->
+        <flight>
+            <flaps-pushed type="int">0</flaps-pushed>
+            <spoilers-pushed type="int">0</spoilers-pushed>
+        </flight>
+    </controls>
+    
+    <canopy>
+        <canopy-pos-norm type="float">1.0</canopy-pos-norm>
+    </canopy>
+    
+    <pogos>
+        <pogo-l-dropped type="bool">0</pogo-l-dropped>
+        <pogo-r-dropped type="bool">0</pogo-r-dropped>
+        <pogos-dropped type="bool">0</pogos-dropped>
+        <pogo-l-down type="bool">1</pogo-l-down>
+        <pogo-r-down type="bool">1</pogo-r-down>
+    </pogos>
+
+    <!--
+    <impact>
+        <pogo-l-path type="string">impact/pogo-l</pogo-l-path>
+        <pogo-r-path type="string">impact/pogo-r</pogo-r-path>
+    </impact>
+    -->
+    
+    <eject>
+        <canopy>
+            <canopy-jettison type="bool">0</canopy-jettison>
+            <force-lb type="float">0.0</force-lb>
+            <force-azimuth-deg type="float">180.0</force-azimuth-deg>
+            <force-elevation-deg type="float">85.0</force-elevation-deg>
+        </canopy>
+    </eject>
+    
+    <!-- Autopilot (to be implemented) -->
+    
+    <!-- Custom key bindings -->
+    
+    <input>
+    
+        <keyboard>
+            
+            <key n="67">
+                <name>C</name>
+                <desc>Open/close canopy</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>u2s.toggle_canopy()</script>
+                </binding>
+            </key>
+            
+            <key n="82">
+                <name>R</name>
+                <desc>Reset Pogos</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>pogos.reset_pogos()</script>
+                </binding>
+            </key>
+            
+            <key n="69">
+                <name>E</name>
+                <desc>Eject</desc>
+                <binding>
+                    <command>nasal</command>
+                    <script>eject.eject()</script>
+                </binding>
+            </key>
+            
+            <key n="125">
+                <name>}</name>
+                <desc>Set throttle to idle (unset from OFF)</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>/controls/engines/throttle-off</property>
+                    <value>0</value>
+                </binding>
+            </key>
+            
+            <key n="123">
+                <name>{</name>
+                <desc>Set throttle to OFF</desc>
+                <binding>
+                    <command>property-assign</command>
+                    <property>/controls/engines/throttle-off</property>
+                    <value>1</value>
+                </binding>
+            </key>
+   
+   <!-- not working anyways (reset over system reinit)
+   <key n="68">
+    <name>D</name>
+    <desc>Reset Eject for testing only</desc>
+    <binding>
+     <command>nasal</command>
+     <script>eject.reset_eject()</script>
+    </binding>
+   </key>
+   -->
+   
+   <!-- Control commands for testing ejection seat -->
+   <!-- (commenting out)
+   <key n="97">
+    <name>a</name>
+    <desc>Testcube Roll Left</desc>
+    <binding>
+     <command>nasal</command>
+     <script>eject.roll_left()</script>
+    </binding>
+   </key>
+   
+   <key n="119">
+    <name>w</name>
+    <desc>Testcube Pitch Down</desc>
+    <binding>
+     <command>nasal</command>
+     <script>eject.pitch_down()</script>
+    </binding>
+   </key>
+
+  <key n="115">
+    <name>s</name>
+    <desc>Testcube Pitch Up</desc>
+    <binding>
+     <command>nasal</command>
+     <script>eject.pitch_up()</script>
+    </binding>
+   </key>
+
+  <key n="100">
+    <name>d</name>
+    <desc>Testcube Roll Right</desc>
+    <binding>
+     <command>nasal</command>
+     <script>eject.roll_right()</script>
+    </binding>
+   </key>
+   
+   <key n="113">
+    <name>q</name>
+    <desc>Testcube Turn Left</desc>
+    <binding>
+     <command>nasal</command>
+     <script>eject.turn_left()</script>
+    </binding>
+   </key>
+   
+   <key n="101">
+    <name>e</name>
+    <desc>Testcube Turn Right</desc>
+    <binding>
+     <command>nasal</command>
+     <script>eject.turn_right()</script>
+    </binding>
+   </key>
+   -->
+   
+        </keyboard>
+
+    </input>
+    
+    <!-- Nasal -->
+    
+    <nasal>
+        
+        <u2s>
+            <file>Aircraft/U-2S/Nasal/u-2s.nas</file>
+        </u2s>
+        
+        <pogos>
+            <file>Aircraft/U-2S/Nasal/pogos.nas</file>
+        </pogos>
+        
+        <eject>
+            <file>Aircraft/U-2S/Nasal/eject.nas</file>
+        </eject>
+        
+    </nasal>
+    
+<!-- End of Property List -->
+</PropertyList>

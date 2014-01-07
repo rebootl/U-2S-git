@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<!--
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+*****************************************************
+
+Pilot animation and model file
+- incl. ej. seat and parachute
+
+-->
+
+
+<PropertyList>
+
+ <path>Pilot.ac</path>
+
+<!-- Model Offset -->
+
+ <offsets>
+   <pitch-deg>0</pitch-deg>   
+   <heading-deg>180</heading-deg>
+   <roll-deg>0</roll-deg>
+   <x-m>-5.361</x-m>
+   <y-m>0.0</y-m>
+   <z-m>1.876</z-m>
+ </offsets>
+
+<!-- Shading -->
+
+ <animation>
+   <type>shader</type>
+   <shader>chrome</shader>
+   <texture>glass_shader.png</texture>
+   <object-name>Pilot_Helmet-Visor</object-name>
+   <object-name>Pilot_Helmet-Protective-Visor</object-name>
+ </animation>
+
+<!-- Animation -->
+
+ <animation>
+  <enable-hot type="bool">false</enable-hot>
+ </animation>
+
+<!-- Hide the head when looking from pilot -->
+
+ <animation>
+  <type>select</type>
+  <object-name>Pilot_Head-detail-applied</object-name>
+  <object-name>Pilot_Helmet-Base</object-name>
+  <object-name>Pilot_Helmet-Visor</object-name>
+  <object-name>Pilot_Helmet-Protective-Visor</object-name>
+  <condition>
+   <not>
+    <property>/sim/current-view/internal</property>
+   </not>
+  </condition>
+ </animation>
+
+<!-- Ejection Animations -->
+<!-- Hide/reveal the parachute -->
+
+ <animation>
+  <type>select</type>
+  <object-name>Pilot_Parachute</object-name>
+  <condition>
+   <greater-than>
+    <property>/eject/parachute-deploy</property>
+    <value>0.0</value>
+   </greater-than>
+  </condition>
+ </animation>
+
+<!-- Hide the seat -->
+ <animation>
+  <type>select</type>
+  <object-name>Ejection-Seat-Adapted</object-name>
+  <condition>
+   <not>
+    <property>/eject/parachute-deploy</property>
+   </not>
+  </condition>
+ </animation>
+
+<!-- Scale Animation for chute opening -->
+
+ <animation>
+  <type>scale</type>
+  <object-name>Pilot_Parachute</object-name>
+  <property>/eject/parachute-deploy</property>
+  <x-factor>1.0</x-factor>
+  <y-factor>1.0</y-factor>
+  <z-factor>1.0</z-factor>
+  <x-min>0.05</x-min>
+  <y-min>0.05</y-min>
+  <z-min>0.15</z-min>
+  <x-max>1.0</x-max>
+  <y-max>1.0</y-max>
+  <z-max>1.0</z-max>
+ </animation>
+
+<!-- Rotate the pilot when hanging on the parachute -->
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Pilot_Bodysuit</object-name>
+  <object-name>Pilot_Bodysuit-Clamps</object-name>
+  <object-name>Pilot_Bodysuit-bra</object-name>
+  <object-name>Pilot_Cable-Airsupply</object-name>
+  <object-name>Pilot_Cable-Airsupply.R</object-name>
+  <object-name>Pilot_Head-detail-applied</object-name>
+  <object-name>Pilot_Helmet-Base</object-name>
+  <object-name>Pilot_Helmet-Protective-Visor</object-name>
+  <object-name>Pilot_Helmet-Visor</object-name>
+  <object-name>Pilot_Belts</object-name>
+  <property>/eject/hang-ang</property>
+  <factor>30</factor>			<!-- maybe add interpolation, instead of factor... -->
+  <center>
+   <x-m>0.0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<!-- Rotate the parachute when on ground -->
+
+  <animation>
+  <type>rotate</type>
+  <object-name>Pilot_Parachute</object-name>
+  <property>/eject/para-ang</property>
+  <interpolation>
+    <entry><ind>0</ind><dep>0</dep></entry>
+    <entry><ind>0.5</ind><dep>-40</dep></entry>
+    <entry><ind>1</ind><dep>-75</dep></entry>
+  </interpolation>
+  <center>
+   <x-m>0.0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<!-- Add particle system -->
+<!-- Commented out for now, leaving for later implementation
+ <model>
+  <path>Aircraft/U-2S/Models/Effects/EjectionSeat.xml</path>
+  <offsets>
+   <x-m>0.0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+   <roll-deg>    0 </roll-deg>
+   <pitch-deg>   0 </pitch-deg>
+   <heading-deg> 0 </heading-deg>
+  </offsets>
+ </model>
+-->
+
+
+</PropertyList>
+
+
+
+

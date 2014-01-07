@@ -1,0 +1,234 @@
+<?xml version="1.0"?>
+<!--
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear Flightsimulator
+
+*****************************************************
+
+YASim FDM
+=========
+
+This was the original FDM I created.
+It is now replaced by the JSBSim FDM.
+It's left here for reference only.
+
+The geometry specification should be correct but flying behaviour (esp. pitch) is poor.
+I think the cockpit position is wrong.
+
+-->
+
+<!-- Research Data
+
+MAIN WING
+
+Airfoils
+root: NACA 63A409
+tip:	NACA 63A406
+
+Analysis, made with JavaFoil (www.mh-aerotools.de)
+Thickness t/c: 9%
+Thickness location xt/c: 30%
+Design Lift Coefficient Cl: 0.4
+a: 0.8
+A-Mod: 1
+
+For Re=10.5mio.
+Cl - at alpha:
+0deg - 0.38
+8.7deg - 1.16 (max.)
+Stall start 5,47deg - 6.78deg
+
+from drawings:
+(constructed)
+MAC:
+center of MAC at x: -0.11
+25% at x: 0.55
+length: 3m
+
+incidence root: avg. 5.85 deg
+incidence tip: avg. 2.8 deg
+res. twist = -3.05 deg
+
+HSTAB
+
+inc.: 1deg - 2.2deg, avg. 1.6deg
+
+FLIGHT CHARACTERISTICS
+
+only found Flight Manual for U-2C/F (small U-2 version)
+from there:
+
+Stall speeds at Flaps angles (540gal. fuel)
+0deg 85kt
+15deg 82kt
+25deg 80kt
+35deg 78kt
+
+Approach aoa using 1/2 of stall aoa
+
+Glide angle 2.8deg (Calculated from opt. glide distance.)
+
+-->
+
+<airplane mass="14320">
+
+<!-- Approach configuration -->
+<approach speed="78" aoa="5.5" glide-angle="4.5">
+
+ </approach>
+
+
+<!-- Cruise configuration -->
+ <cruise speed="170" alt="35000" glide-angle="5.0">
+  
+ </cruise>
+
+
+
+ <!-- pilot's eyepoint -->
+ <cockpit x="-1.648" y="0" z="0.572"/>
+
+ <!-- Main Body and two Superpods --> 
+ <fuselage ax="9.836" ay="0" az="1.124" bx="-8.7" by="0" bz="1.6"
+           width="1.75" taper="0.5" midpoint="0.45"/>
+
+ <fuselage ax="4.33" ay="4.37" az="1.218" bx="-3.0" by="4.37" bz="1.218"
+           width="1.0" taper="0.8" midpoint="0.5"/>
+
+ <fuselage ax="4.33" ay="-4.37" az="1.218" bx="-3.0" by="-4.37" bz="1.218"
+           width="1.0" taper="0.8" midpoint="0.5"/>
+
+ <!-- Main Wing -->
+ <wing x="0.06" y="0.807" z="1.460" length="14.9" chord="4.5"
+       incidence="4.0" twist="-1.0" taper="0.22" sweep="1.55"
+       dihedral="0.0" camber="0.05">
+  
+  <stall aoa="11" width="7.5" peak="1.4"/>
+  
+  <!-- Flaps geometry -->
+  <flap0 start="0.02" end="0.55" lift="1.5" drag="3.0"/>
+  <!-- Aileron geometry -->
+  <flap1 start="0.65" end="0.995" lift="1.1" drag="1.2"/>
+  <!--<spoiler start="0.34" end="0.465" lift="0.0" drag="6.0"/>-->
+  <!-- Flaps Control -->
+  <control-input axis="/controls/flight/flaps" control="FLAP0"/>
+  <control-output control="FLAP0" prop="/surface-positions/flap-pos-norm"/>
+  <control-speed control="FLAP0" transition-time="6"/>
+  <!-- Spoiler Control, not necessary at the moment, implement when airbrakes get implemented
+  <control-input axis="/controls/flight/speedbrake" control="SPOILER"/>
+  <control-output control="SPOILER" prop="/surface-positions/speedbrake-norm"/>
+  <control-speed control="SPOILER" transition-time="3"/>-->
+  <!-- Aileron Control -->
+  <control-input axis="/controls/flight/aileron" control="FLAP1" split="true"/>
+  <control-input axis="/controls/flight/aileron-trim" control="FLAP1" split="true"/>
+  <control-output control="FLAP1" side="left"
+                  prop="/surface-positions/left-aileron-pos-norm"/>
+  <control-output control="FLAP1" side="right"
+                  prop="/surface-positions/right-aileron-pos-norm"/>
+ </wing>
+ <!-- Horizontal Stabilizer -->
+ <hstab x="-7.08" y="0.6" z="2.304" length="3.28" chord="2.22"
+        incidence="1.5" twist="0.0" taper="0.43" sweep="5.1"
+        dihedral="0.0" camber="0.001">
+  <stall aoa="12" width="6" peak="1.5"/>
+  <flap0 start="0" end="1" lift="1.4" drag="1.5"/>
+  <!-- Elevator Control -->
+  <control-input axis="/controls/flight/elevator" control="FLAP0"/>
+  <control-input axis="/controls/flight/elevator-trim" control="FLAP0"/>
+  <control-output control="FLAP0" prop="/surface-positions/elevator-pos-norm"/>
+  
+ </hstab>
+ <!-- Vertical Stabilizer -->
+ <vstab x="-7.76" y="0.0" z="2.58" length="3.1" chord="2.45"
+        incidence="0.0" twist="0.0" taper="0.39" sweep="11.1">
+  <!--<stall aoa="10" width="9" peak="1.5"/>-->
+  <flap0 start="0" end="1" lift="1.8" drag="1.5"/>
+  <!-- Rudder Control -->
+  <control-input axis="/controls/flight/rudder" control="FLAP0" invert="true"/>
+  <control-input axis="/controls/flight/rudder-trim" control="FLAP0" invert="true"/>
+  <control-output control="FLAP0" prop="/surface-positions/rudder-pos-norm"
+                  min="5" max="-5"/>
+ </vstab>
+ 
+ <!-- Airbrakes -->
+ <!-- right --><!--
+ <vstab x="-3.75" y="-0.695" z="1.285" length="1.0" chord="0.6"
+	incidence="0.0" twist="0.0" taper="1.0" sweep="0.0"
+	dihedral="77.6">
+  <flap0 start="0" end="1" lift="0.0" drag="2.5" />
+  <control-input axis="/controls/flight/airbrake" control="FLAP0"/>
+  <control-speed control="FLAP0" transition-time="3"/>
+  <control-output control="FLAP0" prop="/surface-positions/airbrake-R-pos-norm"/>
+ </vstab>
+-->
+
+ <!-- Main Gear -->
+ <gear x="1.453" y="0.0" z="-0.105" compression="0.1" spring="1.7" damp="1.2" 
+       sfric="0.7" dfric="0.6">
+  <!-- <control-input axis="/controls/flight/rudder" control="STEER" square="true"/> -->
+  <control-input axis="/controls/gear/gear-down" control="EXTEND"/>
+  <control-input axis="/controls/gear/brake-left" control="BRAKE"/>
+  <control-input axis="/controls/gear/brake-right" control="BRAKE"/>
+  <control-input axis="/controls/gear/brake-parking" control="BRAKE"/>
+  <control-speed control="EXTEND" transition-time="10"/>
+  <control-output control="EXTEND" prop="/gear/gear[0]/position-norm"/>
+ </gear>
+ 
+ <!-- Tail Gear -->
+ <gear x="-5.12" y="0.0" z="0.345" compression="0.15" spring="1.0" 
+       sfric="0.7" dfric="0.6">
+  <control-input axis="/controls/flight/rudder" control="STEER" square="true" invert="true"/>
+  <control-input axis="/controls/gear/gear-down" control="EXTEND"/>
+  <control-speed control="EXTEND" transition-time="6"/>
+  <control-output control="EXTEND" prop="/gear/gear[1]/position-norm"/>
+  <control-output control="STEER" prop="/gear/gear[1]/steering-pos-norm"/>
+ </gear>
+ 
+ <!-- Left Wing Tip -->
+ <gear x="-0.16" y="15.702" z="1.170" skid="1" compression="0.4" spring="0.8"
+       sfric="0.4" dfric="0.3"/>
+ <!-- Right Wing Tip -->
+ <gear x="-0.16" y="-15.702" z="1.170" skid="1" compression="0.4" spring="0.8"
+       sfric="0.4" dfric= "0.3"/>
+       
+ <!-- Pogos, left and right -->
+ <gear x="-1.11" y="8.7" z="0.1" compression="0.3" spring="0.5" 
+       sfric="0.7" dfric="0.6">
+  <control-input axis="pogos/pogo-l-down" control="EXTEND"/>
+  <control-speed control="EXTEND" transition-time="1"/>
+  <control-output control="EXTEND" prop="/pogos/pogo-l-pos-norm"/>
+ </gear>
+
+ <gear x="-1.11" y="-8.7" z="0.1" compression="0.3" spring="0.5"
+       sfric="0.7" dfric="0.6">
+  <control-input axis="pogos/pogo-r-down" control="EXTEND"/>
+  <control-speed control="EXTEND" transition-time="1"/>
+  <control-output control="EXTEND" prop="/pogos/pogo-r-pos-norm"/>
+ </gear>
+
+
+
+
+<!-- Fuel Tanks -->
+ <tank x="0.5" y="3.6" z="1.4" capacity="1000"/>
+ <tank x="0.5" y="-3.6" z="1.4" capacity="1000"/>
+ <tank x="0.3" y="7.4" z="1.4" capacity="760"/>
+ <tank x="0.3" y="-7.4" z="1.4" capacity="760"/>
+
+ <!-- Ballast -->
+ <ballast x="8.36" y="0.0" z="1.13" mass="1700"/>
+
+
+
+<!-- Engine -->
+ <jet x="-3.3" y="0.0" z="1.4" mass="3300" thrust="19000" tsfc="0.073">
+   <actionpt x="-7.3" y="0.0" z="1.6"/>
+   <control-input axis="/controls/engines/engine[0]/throttle" control="THROTTLE"/>
+ </jet>
+
+</airplane>

@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<!-- 
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+*****************************************************
+
+Throttle assembly
+===========
+
+- Throttle (off/throttle)
+- Speedbrake switch (on/off, not animated)
+- Flaps (ext./retr., animated)
+- Ail Trim (left/right, not animated)
+
+-->
+<PropertyList>
+    
+    <path>throttle.ac</path>
+
+    <!-- throttle movement animation -->
+    <animation>
+        <type>rotate</type>
+        <object-name>Throttle-Handler</object-name>
+        <object-name>Speedbrake-Switch</object-name>
+        <property>controls/engines/throttle-override-pos-norm</property>
+        <interpolation>
+            <entry><ind>-0.2</ind><dep>0.0</dep></entry>
+            <entry><ind>-0.1</ind><dep>13.5</dep></entry>
+            <entry><ind>0</ind><dep>8.0</dep></entry>
+            <entry><ind>1</ind><dep>90.0</dep></entry>
+        </interpolation>
+        <center>
+            <x-m>0.0</x-m>
+            <y-m>0.0</y-m>
+            <z-m>0.0</z-m>
+        </center>
+        <axis>
+            <x>0</x>
+            <y>-1</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    
+    <animation>
+        <type>rotate</type>
+        <object-name>Throttle-Handler</object-name>
+        <object-name>Speedbrake-Switch</object-name>
+        <property>/controls/engines/throttle-override-pos-norm</property>
+        <interpolation>
+            <entry><ind>-0.2</ind><dep>-15.3</dep></entry>
+            <entry><ind>-0.1</ind><dep>-15.3</dep></entry>
+            <entry><ind>0</ind><dep>0.0</dep></entry>
+            <entry><ind>1</ind><dep>0.0</dep></entry>
+        </interpolation>
+        <center>
+            <x-m>0.0</x-m>
+            <y-m>-0.038</y-m>
+            <z-m>0.0</z-m>
+        </center>
+        <axis>
+            <x>0</x>
+            <y>0</y>
+            <z>1</z>
+        </axis>
+    </animation>
+
+    <!-- throttle - on-off click -->
+    <animation>
+        <type>pick</type>
+        <object-name>Throttle-Handler</object-name>
+        <action>
+            <button>1</button>
+            <repeatable>false</repeatable>
+            <binding>
+                <command>property-toggle</command>
+                <property>/controls/engines/throttle-off</property>
+            </binding>
+        </action>
+    </animation>
+
+    <!-- throttle - throttle -->
+    <animation>
+        <type>knob</type>
+        <object-name>Throttle-Handler</object-name>
+        <drag-scale>0.1</drag-scale>
+        <drag-direction>vertical</drag-direction>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>/controls/engines/engine/throttle</property>
+                <factor>0.01</factor>
+                <min>0.0</min>
+                <max>1.0</max>                
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
+    <!-- speedbrake - on-off click (switch not animated) -->
+    <animation>
+        <type>knob</type>
+        <object-name>Speedbrake-Switch</object-name>
+        <action>
+            <binding>
+                <command>property-toggle</command>
+                <property>/controls/flight/speedbrake</property>
+            </binding>
+        </action>
+    </animation>
+
+    <!-- flaps switch animation -->
+    <animation>
+        <type>rotate</type>
+        <object-name>Flaps-Switch</object-name>
+        <property>/controls/flight/flaps-pushed</property>
+        <interpolation>
+            <entry><ind>-1</ind><dep>30</dep></entry>
+            <entry><ind>0</ind><dep>0</dep></entry>
+            <entry><ind>1</ind><dep>-30</dep></entry>
+        </interpolation>
+        <center>
+            <x-m>0.049</x-m>
+            <y-m>0.0</y-m>
+            <z-m>0.087</z-m>
+        </center>
+        <axis>
+            <x>0</x>
+            <y>-1</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    
+    <!-- flaps - in-out drag -->
+    <animation>
+        <type>knob</type>
+        <object-name>Flaps-Switch</object-name>
+        <drag-direction>vertical</drag-direction>
+        <increase>
+            <binding>
+                <command>nasal</command>
+                <script>controls.flapsDown(-1)</script>
+            </binding>
+        </increase>
+        <decrease>
+            <binding>      
+                <command>nasal</command>
+                <script>controls.flapsDown(1)</script>
+            </binding>
+        </decrease>
+        <release>
+            <binding>      
+                <command>nasal</command>
+                <script>controls.flapsDown(0)</script>
+            </binding>
+        </release>
+    </animation>
+
+    <!-- ail trim - plusminus drag (switch not animated) -->
+    <animation>
+        <type>knob</type>
+        <object-name>AilTrim-Switch</object-name>
+        <drag-scale>0.1</drag-scale>
+        <action>
+            <binding>
+                <command>property-adjust</command>
+                <property>/controls/flight/aileron-trim</property>
+                <factor>0.01</factor>
+                <min>-1.0</min>
+                <max>1.0</max>
+                <wrap>false</wrap>
+            </binding>
+        </action>
+    </animation>
+
+</PropertyList>

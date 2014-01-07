@@ -1,0 +1,595 @@
+<?xml version="1.0"?>
+<!--
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear Flightsimulator
+
+*****************************************************
+
+Main model and animation file
+=============================
+
+-->
+
+
+<PropertyList>
+
+ <path>U-2S.ac</path>
+
+<!-- Model Offset -->
+
+ <offsets>
+   <pitch-deg>0</pitch-deg>   
+   <heading-deg>0</heading-deg>
+   <roll-deg>0</roll-deg>
+   <x-m>0.0</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.0</z-m>
+ </offsets>
+
+<!-- Shading -->
+
+ <animation>
+   <type>shader</type>
+   <shader>chrome</shader>
+   <texture>glass_shader.png</texture>
+   <object-name>Canopy_Glass</object-name>
+   <object-name>Cockpit_Frontglass</object-name>
+   <object-name>Drift-Scope</object-name>
+ </animation>
+
+<!-- Glass w/ chrome shader does work well in Rembrandt,
+when registering it's completely transparent wich is not what I want
+(model-combined effect could be used for this, leaving it as is for now)
+    <effect>
+        <inherits-from>Effects/model-transparent</inherits-from>
+        <object-name>Canopy_Glass</object-name>
+    </effect>
+-->
+
+    <effect>
+        <inherits-from>Effects/model-transparent</inherits-from>
+        <object-name>Wing-Lamp-L</object-name>
+        <object-name>Wing-Lamp-R</object-name>
+        <object-name>Wing-Lamp-T</object-name>
+        <object-name>Landing-Lights</object-name>
+        <object-name>Beacon-top-L</object-name>
+        <object-name>Beacon-top-R</object-name>
+        <object-name>Beacon-bottom</object-name>
+    </effect>
+
+
+<!-- Separate models -->
+<!-- External lights (Rembrandt) -->
+    <model>
+        <path>lights-ext.xml</path>
+    </model>
+
+<!-- Cockpit -->
+    <model>
+        <path>Cockpit.xml</path>
+    </model>
+
+
+<!-- Animated Parts -->
+
+<!-- Hiding the canopy when jettisoned -->
+
+ <animation>
+  <type>select</type>
+  <object-name>Canopy</object-name>
+  <object-name>Canopy_Glass</object-name>
+  <condition>
+   <not>
+    <property>/eject/canopy/canopy-jettison</property>
+   </not>
+  </condition>
+ </animation>
+
+<!-- Hiding the pogos when dropped -->
+
+ <animation>
+  <type>select</type>
+  <object-name>Pogo_L</object-name>
+  <object-name>Pogo_L-Wheel</object-name>
+  <condition>
+   <not>
+    <property>pogos/pogo-l-dropped</property>
+   </not>
+  </condition>
+ </animation>
+
+ <animation>
+  <type>select</type>
+  <object-name>Pogo_R</object-name>
+  <object-name>Pogo_R-Wheel</object-name>
+  <condition>
+   <not>
+    <property>pogos/pogo-r-dropped</property>
+   </not>
+  </condition>
+ </animation>
+
+<!-- Show/Hide Animation for the Gear due to misleaded coordination when spinning the wheels -->
+<!-- DON'T DO IT THIS WAY ... IMPROVE
+ <animation>
+  <type>select</type>
+  <object-name>Main-Gear</object-name>
+  <condition>
+   <less-than>
+    <property>gear/gear[0]/position-norm</property>
+    <value>1.0</value>
+   </less-than>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Tail-Gear</object-name>
+  <condition>
+   <less-than>
+    <property>gear/gear[1]/position-norm</property>
+    <value>1.0</value>
+   </less-than>
+  </condition>
+ </animation>
+ 
+ <animation>
+  <type>select</type>
+  <object-name>Main-Gear-Wheel</object-name>
+  <object-name>Main-Gear-Stud</object-name>
+  <object-name>Main-Gear-Rest</object-name>
+  <condition>
+   <equals>
+    <property>gear/gear[0]/position-norm</property>
+    <value>1.0</value>
+   </equals>
+  </condition>
+ </animation>
+  
+ <animation>
+  <type>select</type>
+  <object-name>Tail-Gear-Wheel</object-name>
+  <object-name>Tail-Gear-Stud</object-name>
+  <object-name>Tail-Gear-Rest</object-name>
+  <condition>
+   <equals> 
+    <property>gear/gear[1]/position-norm</property>
+    <value>1.0</value>
+   </equals>
+  </condition>
+ </animation>
+-->
+
+<!-- Front Gear -->
+
+ <!-- Main Gear Wheel rotation -->
+ <!-- either this or compression, both doesn't really works ... ?????
+ <animation>
+  <type>spin</type>
+  <object-name>Main-Gear-Wheel</object-name>
+  <property>gear/gear[0]/rollspeed-ms</property>
+  # Factor: 60 * ( 1 / d * pi ) ; d=diameter_of_wheel=0.626m
+  <factor>30.51</factor>
+  <center>
+    <x-m>1.453</x-m>
+    <y-m>0.0</y-m>
+    <z-m>0.208</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+ -->
+
+ <!-- Main Gear compression -->
+ 
+ <animation>
+  <type>translate</type>
+  <object-name>Main-Gear-Stud</object-name>
+  <object-name>Main-Gear-Wheel</object-name>
+  <property>gear/gear[0]/compression-ft</property>
+  <!-- Factor ??? -->
+  <factor>0.3048</factor><!-- ft in m -->
+  <axis>
+   <x>0</x>
+   <y>0</y>
+   <z>1</z>
+  </axis>
+ </animation>
+ 
+ <!-- Main Gear Extend/Retract -->
+
+ <animation>
+ <name>Main-Gear-Grp</name>
+  <object-name>Main-Gear-Stud</object-name>
+  <object-name>Main-Gear-Wheel</object-name>
+  <object-name>Main-Gear-Rest</object-name>
+  <object-name>Landing-Lights</object-name>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Main-Gear-Grp</object-name>
+  <property>gear/gear[0]/position-norm</property>
+  <interpolation>
+    <entry><ind>0</ind><dep>107</dep></entry>
+    <entry><ind>1</ind><dep>0</dep></entry>
+  </interpolation>
+  <center>
+   <x-m>-1.41</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.81</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Main-Gear-Door_R</object-name>
+  <property>gear/gear[0]/position-norm</property>
+  <interpolation>
+    <entry><ind>0</ind><dep>0</dep></entry>
+    <entry><ind>0.2</ind><dep>80</dep></entry>
+    <entry><ind>1</ind><dep>114</dep></entry>
+  </interpolation>
+  <center>
+   <x-m>0.0</x-m>
+   <y-m>0.311</y-m>
+   <z-m>0.749</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Main-Gear-Door_L</object-name>
+  <property>gear/gear[0]/position-norm</property>
+  <interpolation>
+    <entry><ind>0</ind><dep>0</dep></entry>
+    <entry><ind>0.2</ind><dep>-80</dep></entry>
+    <entry><ind>1</ind><dep>-114</dep></entry>
+  </interpolation>
+  <center>
+   <x-m>0.0</x-m>
+   <y-m>-0.311</y-m>
+   <z-m>0.749</z-m>
+  </center>
+  <axis>
+   <x>1</x>
+   <y>0</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+<!-- Tail Gear -->
+ 
+ <!-- Tail Gear Steering -->
+ 
+ <animation>
+  <type>rotate</type>
+  <object-name>Tail-Gear-Wheel</object-name>
+  <object-name>Tail-Gear-Stud</object-name>
+  <property>gear/gear[1]/steering-norm</property>
+  <interpolation>
+   <entry><ind>-1</ind><dep>-80</dep></entry>
+   <entry><ind>1</ind><dep>80</dep></entry>
+  </interpolation>
+  <center>
+   <x-m>5.124</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.444</z-m>
+  </center>
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>9.90741</z>
+  </axis>
+ </animation>
+ 
+ <!-- Tail Gear Wheel rotation -->
+ <!--
+ <animation>
+  <type>spin</type>
+  <object-name>Tail-Gear-Wheel</object-name>
+  <property>gear/gear[1]/rollspeed-ms</property>
+  # Factor: 60 * ( 1 / d * pi ) ; d=diameter_of_wheel=0.28m
+  <factor>68.208</factor>
+  <center>
+    <x-m>5.145</x-m>
+    <y-m>0.0</y-m>
+    <z-m>0.21</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+ -->
+ 
+ <!-- Tail Gear compression -->
+ 
+ <animation>
+  <type>translate</type>
+  <object-name>Tail-Gear-Stud</object-name>
+  <object-name>Tail-Gear-Wheel</object-name>
+  <property>gear/gear[1]/compression-ft</property>
+  <factor>0.3048</factor><!-- ft in m -->
+  <axis>
+   <x>-1</x>
+   <y>0</y>
+   <z>9.90741</z>
+  </axis>
+ </animation>
+
+ <!-- Tail Gear Extend/Retract -->
+ <animation>
+  <name>Tail-Gear-Grp</name>
+  <object-name>Tail-Gear-Stud</object-name>
+  <object-name>Tail-Gear-Rest</object-name>
+  <object-name>Tail-Gear-Wheel</object-name>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Tail-Gear-Grp</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+    <entry><ind>0</ind><dep>90</dep></entry>
+    <entry><ind>1</ind><dep>0</dep></entry>
+  </interpolation>
+  <center>
+   <x-m>5.25</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.95</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Tail-Gear-Bracket</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+    <entry><ind>0</ind><dep>45</dep></entry>
+    <entry><ind>0.8</ind><dep>35</dep></entry>
+    <entry><ind>1</ind><dep>0</dep></entry>
+  </interpolation>
+  <center>
+   <x-m>5.436</x-m>
+   <y-m>0.0</y-m>
+   <z-m>0.969</z-m>
+  </center>
+  <axis>
+   <x>0</x>
+   <y>1</y>
+   <z>0</z>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Tail-Gear-Door_R</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>0.1</ind><dep>80</dep></entry>
+   <entry><ind>0.2</ind><dep>90</dep></entry>
+   <entry><ind>1</ind><dep>108</dep></entry>
+  </interpolation>
+  <axis>
+   <x1-m>4.327</x1-m>
+   <y1-m>0.269</y1-m>
+   <z1-m>0.784</z1-m>
+   <x2-m>4.928</x2-m>
+   <y2-m>0.270</y2-m>
+   <z2-m>0.826</z2-m>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Tail-Gear-Door_L</object-name>
+  <property>gear/gear[1]/position-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>0.1</ind><dep>-80</dep></entry>
+   <entry><ind>0.2</ind><dep>-90</dep></entry>
+   <entry><ind>1</ind><dep>-108</dep></entry>
+  </interpolation>
+  <axis>
+   <x1-m>4.327</x1-m>
+   <y1-m>-0.269</y1-m>
+   <z1-m>0.784</z1-m>
+   <x2-m>4.928</x2-m>
+   <y2-m>-0.270</y2-m>
+   <z2-m>0.826</z2-m>
+  </axis>
+ </animation>
+
+<!-- Canopy -->
+
+  <animation>
+  <type>rotate</type>
+  <object-name>Canopy</object-name>
+  <object-name>Canopy_Glass</object-name>
+  <property>canopy/canopy-pos-norm</property>
+  <interpolation>
+   <entry><ind>0</ind><dep>0</dep></entry>
+   <entry><ind>1</ind><dep>85</dep></entry>
+  </interpolation>
+  <axis>
+   <x1-m>-6.064</x1-m>
+   <y1-m>-0.412</y1-m>
+   <z1-m>1.740</z1-m>
+   <x2-m>-5.173</x2-m>
+   <y2-m>-0.444</y2-m>
+   <z2-m>1.844</z2-m>
+  </axis>
+ </animation>
+
+<!-- Ailerons -->
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Aileron_L</object-name>      
+  <property>surface-positions/left-aileron-pos-norm</property>
+  <factor>-21</factor>
+  <axis>
+   <x1-m>0.887</x1-m>
+   <y1-m>-10.497</y1-m>
+   <z1-m>1.370</z1-m>
+   <x2-m>0.651</x2-m>
+   <y2-m>-15.606</y2-m>
+   <z2-m>1.364</z2-m>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Aileron_R</object-name>      
+  <property>surface-positions/right-aileron-pos-norm</property>
+  <factor>-21</factor>
+  <axis>
+   <x1-m>0.887</x1-m>
+   <y1-m>10.497</y1-m>
+   <z1-m>1.370</z1-m>
+   <x2-m>0.651</x2-m>
+   <y2-m>15.606</y2-m>
+   <z2-m>1.364</z2-m>
+  </axis>
+ </animation>
+
+<!-- Elevator -->
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Elevator_L</object-name>      
+  <property>surface-positions/elevator-pos-norm</property>
+  <factor>-21</factor>
+  <axis>
+   <x1-m>7.641</x1-m>
+   <y1-m>-0.534</y1-m>
+   <z1-m>2.306</z1-m>
+   <x2-m>7.601</x2-m>
+   <y2-m>-3.839</y2-m>
+   <z2-m>2.306</z2-m>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Elevator_R</object-name>      
+  <property>surface-positions/elevator-pos-norm</property>
+  <factor>21</factor>
+  <axis>
+   <x1-m>7.641</x1-m>
+   <y1-m>0.534</y1-m>
+   <z1-m>2.306</z1-m>
+   <x2-m>7.601</x2-m>
+   <y2-m>3.839</y2-m>
+   <z2-m>2.306</z2-m>
+  </axis>
+ </animation>
+
+<!-- Rudder -->
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Rudder</object-name>      
+  <property>surface-positions/rudder-pos-norm</property>
+  <factor>-21</factor>
+  <axis>
+   <x1-m>8.422</x1-m>
+   <y1-m>0.0</y1-m>
+   <z1-m>5.604</z1-m>
+   <x2-m>8.422</x2-m>
+   <y2-m>0.0</y2-m>
+   <z2-m>2.838</z2-m>
+  </axis>
+ </animation>
+
+<!-- Flaps -->
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Flaps_L</object-name>      
+  <property>surface-positions/flap-pos-norm</property>
+  <factor>-50</factor>
+  <axis>
+   <x1-m>1.1</x1-m>
+   <y1-m>-1.118</y1-m>
+   <z1-m>1.425</z1-m>
+   <x2-m>0.822</x2-m>
+   <y2-m>-8.972</y2-m>
+   <z2-m>1.397</z2-m>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Flaps_R</object-name>      
+  <property>surface-positions/flap-pos-norm</property>
+  <factor>50</factor>
+  <axis>
+   <x1-m>1.1</x1-m>
+   <y1-m>1.118</y1-m>
+   <z1-m>1.425</z1-m>
+   <x2-m>0.822</x2-m>
+   <y2-m>8.972</y2-m>
+   <z2-m>1.397</z2-m>
+  </axis>
+ </animation>
+
+<!-- Speedbrakes -->
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Airbrake_R</object-name>      
+  <property>surface-positions/speedbrake-pos-norm</property>
+  <factor>72</factor>
+  <axis>
+   <x1-m>3.749</x1-m>
+   <y1-m>0.626</y1-m>
+   <z1-m>0.986</z1-m>
+   <x2-m>3.752</x2-m>
+   <y2-m>0.775</y2-m>
+   <z2-m>1.579</z2-m>
+  </axis>
+ </animation>
+
+ <animation>
+  <type>rotate</type>
+  <object-name>Airbrake_L</object-name>      
+  <property>surface-positions/speedbrake-pos-norm</property>
+  <factor>-72</factor>
+  <axis>
+   <x1-m>3.749</x1-m>
+   <y1-m>-0.626</y1-m>
+   <z1-m>0.986</z1-m>
+   <x2-m>3.752</x2-m>
+   <y2-m>-0.775</y2-m>
+   <z2-m>1.579</z2-m>
+  </axis>
+ </animation>
+
+</PropertyList>

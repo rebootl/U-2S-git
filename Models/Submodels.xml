@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!--
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+*****************************************************
+
+1.) Droppable pogos animation
+2.) Canopy jettison for eject function
+
+-->
+
+
+<PropertyList>
+
+ <!-- Left Pogo Submodel -->
+
+ <submodel>
+  <name>Pogo_L</name>
+  <model>Aircraft/U-2S/Models/Pogo_L.xml</model>
+  <trigger>/pogos/pogo-l-dropped</trigger>
+  <repeat>false</repeat>
+  <count>1</count>
+  <speed>0</speed>
+  <aero-stabilised>false</aero-stabilised>
+  <!-- Effective Drag Area (sq ft)-->
+  <eda>1.45</eda>
+  <!-- Coefficient of Drag -->
+  <cd>1.05</cd>
+  <!-- Weight in pounds -->
+  <weight>22.0</weight>
+  <x-offset>0.0</x-offset>
+  <y-offset>0.0</y-offset>
+  <z-offset>0.0</z-offset>
+  <pitch-offset>0</pitch-offset>
+  <yaw-offset>0</yaw-offset>
+  <life>30</life>
+  <delay>0</delay>
+  <impact>true</impact>
+  
+  <impact-reports>/impact/pogo-l-path</impact-reports>
+  
+ </submodel>
+
+ <!-- Right Pogo Submodel -->
+
+ <submodel>
+  <name>Pogo_R</name>
+  <model>Aircraft/U-2S/Models/Pogo_R.xml</model>
+  <trigger>/pogos/pogo-r-dropped</trigger>
+  <repeat>false</repeat>
+  <count>1</count>
+  <speed>0</speed>
+  <aero-stabilised>false</aero-stabilised>
+  <!-- Effective Drag Area (sq ft)-->
+  <eda>1.45</eda>
+  <!-- Coefficient of Drag -->
+  <cd>1.05</cd>
+  <!-- Weight in pounds -->
+  <weight>22.0</weight>
+  <x-offset>0.0</x-offset>
+  <y-offset>0.0</y-offset>
+  <z-offset>0.0</z-offset>
+  <pitch-offset>0</pitch-offset>
+  <yaw-offset>0</yaw-offset>
+  <life>30</life>
+  <delay>0</delay>
+  <impact>true</impact>
+  
+  <impact-reports>/impact/pogo-r-path</impact-reports>
+
+ </submodel>
+
+ <!-- Canopy Jettison Submodel -->
+
+ <submodel>
+  <name>Canopy</name>
+  <model>Aircraft/U-2S/Models/Canopy.xml</model>
+  <trigger>/eject/canopy/canopy-jettison</trigger>
+  <repeat>false</repeat>
+  <count>1</count>
+  <speed>0</speed>
+  <aero-stabilised>false</aero-stabilised>
+  <!-- Effective Drag Area (sq ft)-->
+  <eda>8.61</eda>
+  <!-- Coefficient of Drag -->
+  <cd>1.33</cd>
+  <!-- Weight in pounds -->
+  <weight>70.5</weight>
+  <x-offset>0.0</x-offset>
+  <y-offset>0.0</y-offset>
+  <z-offset>0.0</z-offset>
+  <pitch-offset>0</pitch-offset>
+  <yaw-offset>0</yaw-offset>
+  <life>60</life>
+  <delay>0</delay>
+  <impact>false</impact>
+  <!--
+  <impact-reports>/impact/pogo-r-path</impact-reports>
+  -->
+  <!-- Applying jettison force as external force -->
+  <external-force>true</external-force>
+  <force-path>/eject[0]/canopy[0]/</force-path>
+  
+ </submodel>
+
+
+
+
+</PropertyList>
+
+
+
+
+
+
+
