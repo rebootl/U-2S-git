@@ -19,16 +19,23 @@ Main cockpit file
     
     <!-- the cockpit interior -->
     <path>cockpit-int.ac</path>
-    
-    
-    
-    
-    
-    
-    
+        
     <!-- throttle assembly -->
     <model>
         <path>Throttle.xml</path>
+         <offsets>
+            <pitch-deg>0</pitch-deg>
+            <heading-deg>0</heading-deg>
+            <roll-deg>0</roll-deg>
+            <x-m>-6.075</x-m>
+            <y-m>-0.308</y-m>
+            <z-m>1.375</z-m>
+        </offsets>
+    </model>
+    
+    <!-- gear panel -->
+    <model>
+        <path>Gearpanel.xml</path>
          <offsets>
             <pitch-deg>0</pitch-deg>
             <heading-deg>0</heading-deg>
