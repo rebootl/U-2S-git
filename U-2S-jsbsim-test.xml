@@ -27,7 +27,12 @@ JSBSim FDM
 
   - adapted metrics, gears and structural positions,
     tanks, payload and gear control
-  - aerodynamics is WIP
+  - aerodynamics is WIP:
+    - it's flyable, tuned for cruise is ok
+      though some more refinement needed
+    - cleanup absolutely needed
+    - the datcom stuff needs to be redone w/ the
+      information gained (from xfoil and in general)
 
   File:     U-2S.xml
   Inputs:
