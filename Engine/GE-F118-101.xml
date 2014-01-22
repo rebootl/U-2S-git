@@ -15,10 +15,10 @@ GE-F118-101 JSBSim Engine
 
   - changed tsfc
   - manually extended the tables to higher altitudes
-  - bypassratio 2.0 [^1]
-  - corrected milthrust to 17000.0
+  - bypassratio 2.0 [^byp]
+  - corrected milthrust to 17000.0 lb
 
-[^1]: only found one source for this by now: http://wiki.scramble.nl/index.php/General_Electric_F101
+[^byp]: Only found one source for this by now: http://wiki.scramble.nl/index.php/General_Electric_F101
 
   File:     GE-F118-101.xml
   Author:   Aero-Matic v 0.82 / Cem Aydin

@@ -25,14 +25,31 @@ Lockheed U-2S for FlightGear flight simulator
 JSBSim FDM
 ==========
 
-  - adapted metrics, gears and structural positions,
-    tanks, payload and gear control
-  - aerodynamics is WIP:
-    - it's flyable, tuned for cruise is ok
-      though some more refinement needed
-    - cleanup absolutely needed
-    - the datcom stuff needs to be redone w/ the
-      information gained (from xfoil and in general)
+#### General
+
+- adapted metrics, gears and structural positions,
+  tanks, payload (stub) and gear control
+- added custom throttle and fuel system
+
+Open:
+
+- cleanup is really needed, though currently I'm
+  leaving things in as hints for further development
+
+#### Aerodynamics
+
+- polars generated for the main wing (and the hstab)
+  using XFOIL and extended it by Javafoil and commonsense
+
+Open:
+
+- the DATCOM stuff needs to be redone w/ the
+  information gained (from XFOIL and in general)
+- further tuning of flight characteristics acc. to FM
+
+Currently I'm using a "special" configuration that includes the horizontal tail
+for the pitching moment. Though I'm not convinced that this is best, so it might
+be subject to change.
 
   File:     U-2S.xml
   Inputs:
