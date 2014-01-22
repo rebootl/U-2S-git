@@ -21,7 +21,7 @@ Started April 11, 2011
     
         <description>Lockheed U-2S</description>
         
-        <aircraft-version>20140107</aircraft-version>
+        <aircraft-version>20140122</aircraft-version>
         
         <status>alpha</status>
         <rating>
@@ -222,9 +222,61 @@ Started April 11, 2011
                             
             <text>The famous spyplane for FlightGear.
 
-Please see http://wiki.flightgear.org/Lockheed_U-2S for documentation.
+The simulation starts with the engine off, the aircraft is fueled to about 2/3 capacity.
+The APU can be thought as connected and the electrics powered on. Currently there is no 
+custom electrical system. External lights are on.
 
-Have Fun!</text>
+=== Engine start ===
+
+A simplified startup sequence is provided.
+
+* Press and hold "s". This is thought to simulate the APU powering on.
+* After about 5 seconds, when 5% of n1 are reached, put the throttle to idle. 
+  By pressing } or middle mouse click on the throttle.
+* The engine will increase to 60% of n2 and then start. Release "s".
+
+The engine can be started by windmilling, when there is enough altitude to bring the 
+engine to the needed n values. Use above procedure but without pressing "s". This is 
+not (yet) a customized system but the default JSBSim behaviour.
+
+=== Takeoff ===
+
+* Close the canopy (Shift-c) and release the parking brake.
+* Throttle to full.
+* After a short time the pogos will fall off, keep the wings level.
+* At about 80 kt the tail will start to rise. Try to keep the two point position.
+
+=== Climb ===
+
+* Try to keep 160 kt up to 50,000 ft by adjusting pitch.
+* Between 50,000 and 70,000 ft decrease the speed gradually to 105 kt.
+
+=== Descent ===
+
+* Throttle to idle.
+* Extend the speedbrake (Ctrl-b) and lower the gear.
+* Descent with speeds from 105 to 160 kt.
+* Below 50,000 ft speed may be increased up to 220 kt.
+
+=== Landing ===
+
+* Full flaps.
+* Throttle as needed.
+* Threshold should be passed 10 ft above ground.
+* Touchdown should be made on main and tail gear together. To do this the aircraft is 
+  stalled at 1 ft above ground. At this point the main and tail gear should be aligned 
+  to the flight direction.
+* Try to keep the wings level as long as possible.
+* At 60 kt brakes can be applied gently and at 30 kt fully. 
+  (Currently the braking force is reduced in the FDM to provide a better handling with 
+   a button controller.)
+* You can restore the pogos by pressing Shift-r (appropriately when the aircraft has 
+  stopped completely).
+
+Have fun!
+
+Please see http://wiki.flightgear.org/Lockheed_U-2S for more information.
+</text>
             </help>
 
         <!-- Sound -->
