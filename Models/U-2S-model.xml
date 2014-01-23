@@ -71,7 +71,7 @@ when registering it's completely transparent wich is not what I want
 
 <!-- Cockpit -->
     <model>
-        <path>Cockpit.xml</path>
+        <path>Cockpit/Cockpit.xml</path>
     </model>
 
 

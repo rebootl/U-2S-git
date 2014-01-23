@@ -22,8 +22,8 @@ Main cockpit file
         
     <!-- throttle assembly -->
     <model>
-        <path>Throttle.xml</path>
-         <offsets>
+        <path>throttle.xml</path>
+        <offsets>
             <pitch-deg>0</pitch-deg>
             <heading-deg>0</heading-deg>
             <roll-deg>0</roll-deg>
@@ -35,14 +35,27 @@ Main cockpit file
     
     <!-- gear panel -->
     <model>
-        <path>Gearpanel.xml</path>
-         <offsets>
+        <path>gear-panel.xml</path>
+        <offsets>
             <pitch-deg>0</pitch-deg>
             <heading-deg>0</heading-deg>
             <roll-deg>0</roll-deg>
             <x-m>-6.075</x-m>
             <y-m>-0.308</y-m>
             <z-m>1.375</z-m>
+        </offsets>
+    </model>
+
+    <!-- gear indicator -->
+    <model>
+        <path>gear-ind.xml</path>
+        <offsets>
+            <pitch-deg>0</pitch-deg>
+            <heading-deg>0</heading-deg>
+            <roll-deg>0</roll-deg>
+            <x-m>-6.315</x-m>
+            <y-m>-0.282</y-m>
+            <z-m>1.566</z-m>
         </offsets>
     </model>
 

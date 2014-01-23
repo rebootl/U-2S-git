@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!-- 
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+*****************************************************
+
+Gear indicator
+==============
+
+(cr. 2014-01-22)
+-->
+<PropertyList>
+    
+    <path>gear-ind.ac</path>
+
+    <!-- gear status indicator -->
+    <!-- main gear -->
+    <animation>
+        <type>select</type>
+        <object-name>Gear-ind-main-down</object-name>
+        <condition>
+            <equals>
+                <property>/gear/gear[0]/position-norm</property>
+                <value>1.0</value>
+            </equals>
+        </condition>
+    </animation>
+    <animation>
+        <type>select</type>
+        <object-name>Gear-ind-main-trans</object-name>
+        <condition>
+            <and>
+                <less-than>
+                    <property>/gear/gear[0]/position-norm</property>
+                    <value>1.0</value>
+                </less-than>
+                <greater-than>
+                    <property>/gear/gear[0]/position-norm</property>
+                    <value>0.0</value>
+                </greater-than>
+            </and>
+        </condition>
+    </animation>
+    <animation>
+        <type>select</type>
+        <object-name>Gear-ind-main-up</object-name>
+        <condition>
+            <equals>
+                <property>/gear/gear[0]/position-norm</property>
+                <value>0.0</value>
+            </equals>
+        </condition>
+    </animation>
+    <!-- tail gear -->
+    <animation>
+        <type>select</type>
+        <object-name>Gear-ind-tail-down</object-name>
+        <condition>
+            <equals>
+                <property>/gear/gear[1]/position-norm</property>
+                <value>1.0</value>
+            </equals>
+        </condition>
+    </animation>
+    <animation>
+        <type>select</type>
+        <object-name>Gear-ind-tail-trans</object-name>
+        <condition>
+            <and>
+                <less-than>
+                    <property>/gear/gear[1]/position-norm</property>
+                    <value>1.0</value>
+                </less-than>
+                <greater-than>
+                    <property>/gear/gear[1]/position-norm</property>
+                    <value>0.0</value>
+                </greater-than>
+            </and>
+        </condition>
+    </animation>
+    <animation>
+        <type>select</type>
+        <object-name>Gear-ind-tail-up</object-name>
+        <condition>
+            <equals>
+                <property>/gear/gear[1]/position-norm</property>
+                <value>0.0</value>
+            </equals>
+        </condition>
+    </animation>
+
+</PropertyList>
