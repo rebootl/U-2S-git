@@ -21,7 +21,7 @@ Started April 11, 2011
     
         <description>Lockheed U-2S</description>
         
-        <aircraft-version>20140122</aircraft-version>
+        <aircraft-version>20140124</aircraft-version>
         
         <status>alpha</status>
         <rating>
@@ -331,8 +331,8 @@ Please see http://wiki.flightgear.org/Lockheed_U-2S for more information.
         </lighting>
         <!-- pushed props -->
         <flight>
-            <flaps-pushed type="int">0</flaps-pushed>
-            <spoilers-pushed type="int">0</spoilers-pushed>
+            <!--<flaps-pushed type="int">0</flaps-pushed>-->
+            <!--<spoilers-pushed type="int">0</spoilers-pushed>-->
         </flight>
     </controls>
     

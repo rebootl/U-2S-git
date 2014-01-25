@@ -16,7 +16,7 @@ Throttle assembly
 - Throttle (off/throttle)
 - Speedbrake switch (on/off, not animated)
 - Flaps (ext./retr., animated)
-- Ail Trim (left/right, not animated)
+- Ail Trim Tab (left/right, animated)
 
 -->
 <PropertyList>
@@ -118,16 +118,15 @@ Throttle assembly
     <animation>
         <type>rotate</type>
         <object-name>Flaps-Switch</object-name>
-        <property>/controls/flight/flaps-pushed</property>
+        <property>/controls/flight/flaps</property>
         <interpolation>
-            <entry><ind>-1</ind><dep>30</dep></entry>
-            <entry><ind>0</ind><dep>0</dep></entry>
-            <entry><ind>1</ind><dep>-30</dep></entry>
+            <entry><ind>0</ind><dep>12</dep></entry>
+            <entry><ind>1</ind><dep>-12</dep></entry>
         </interpolation>
         <center>
-            <x-m>0.049</x-m>
+            <x-m>0.0</x-m>
             <y-m>0.0</y-m>
-            <z-m>0.087</z-m>
+            <z-m>0.0</z-m>
         </center>
         <axis>
             <x>0</x>
@@ -161,7 +160,24 @@ Throttle assembly
         </release>
     </animation>
 
-    <!-- ail trim - plusminus drag (switch not animated) -->
+    <!-- ail trim tab animation -->
+    <animation>
+        <type>translate</type>
+        <object-name>AilTrim-Switch</object-name>
+        <property>controls/flight/aileron-trim</property>
+        <factor>0.012</factor>
+        <!--<offset-m>2.5</offset-m>-->
+        <axis>   
+            <x1-m>-0.145</x1-m>
+            <y1-m>-1.120</y1-m>
+            <z1-m>0.064</z1-m>
+            <x2-m>-0.156</x2-m>
+            <y2-m>-0.066</y2-m>
+            <z2-m>0.064</z2-m>
+        </axis>
+    </animation>
+
+    <!-- ail trim - plusminus drag -->
     <animation>
         <type>knob</type>
         <object-name>AilTrim-Switch</object-name>

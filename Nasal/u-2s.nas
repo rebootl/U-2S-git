@@ -68,26 +68,26 @@ setprop("/controls/lighting/beacon", 1);
 
 
 ## Set additional pushed properties
-
+## --> not needed, the flap switch should reflect the position/is coupled to it
 # Flaps
 # (override default control)
-controls.flapsDown = func(step) {
-    if(step == 0) {
-        setprop("/controls/flight/flaps-pushed", 0); # unset pushed prop
-        return;
-    }
-    
-    if(props.globals.getNode("/sim/flaps") != nil) {
-        stepProps("/controls/flight/flaps", "/sim/flaps", step);
-        setprop("/controls/flight/flaps-pushed", step); # set pushed prop
-        return;
-    }
-    
-    # Hard-coded flaps movement in 3 equal steps:
-    var val = 0.3333334 * step + getprop("/controls/flight/flaps");
-    setprop("/controls/flight/flaps", val > 1 ? 1 : val < 0 ? 0 : val);
-    setprop("/controls/flight/flaps-pushed", step); # set pushed prop
-}
+#controls.flapsDown = func(step) {
+#    if(step == 0) {
+#        setprop("/controls/flight/flaps-pushed", 0); # unset pushed prop
+#        return;
+#    }
+#    
+#    if(props.globals.getNode("/sim/flaps") != nil) {
+#        stepProps("/controls/flight/flaps", "/sim/flaps", step);
+#        setprop("/controls/flight/flaps-pushed", step); # set pushed prop
+#        return;
+#    }
+#    
+#    # Hard-coded flaps movement in 3 equal steps:
+#    var val = 0.3333334 * step + getprop("/controls/flight/flaps");
+#    setprop("/controls/flight/flaps", val > 1 ? 1 : val < 0 ? 0 : val);
+#    setprop("/controls/flight/flaps-pushed", step); # set pushed prop
+#}
 
 # Speedbrake
 # ..
