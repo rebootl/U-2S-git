@@ -58,5 +58,18 @@ Main cockpit file
             <z-m>1.566</z-m>
         </offsets>
     </model>
+    
+    <!-- trim indicator -->
+    <model>
+        <path>trim-ind.xml</path>
+        <offsets>
+            <pitch-deg>0</pitch-deg>
+            <heading-deg>0</heading-deg>
+            <roll-deg>0</roll-deg>
+            <x-m>-6.315</x-m>
+            <y-m>0.164</y-m>
+            <z-m>1.833</z-m>
+        </offsets>
+    </model>
 
 </PropertyList>

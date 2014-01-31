@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!-- 
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+*****************************************************
+
+Trim indicator
+==============
+
+In reality these seem to be autopilot trim indicators only,
+however currently I do not distinguish between autopilot and
+manual trim.
+
+(cr. 2014-01-24)
+-->
+<PropertyList>
+    
+    <path>trim-ind.ac</path>
+
+    <!-- trim indicator -->
+    <!-- elevator -->
+    <animation>
+        <type>rotate</type>
+        <object-name>Trim-ind-elevator</object-name>
+        <property>controls/flight/elevator-trim</property>
+        <factor>70</factor>
+        <!--<offset-deg>25</offset-deg>-->
+        <center>
+            <x-m>0.0</x-m>
+            <y-m>0.0</y-m>
+            <z-m>0.0</z-m>
+        </center>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    <!-- aileron -->
+    <animation>
+        <type>rotate</type>
+        <object-name>Trim-ind-aileron</object-name>
+        <property>controls/flight/aileron-trim</property>
+        <factor>45</factor>
+        <!--<offset-deg>25</offset-deg>-->
+        <center>
+            <x-m>0.0</x-m>
+            <y-m>0.056</y-m>
+            <z-m>0.0</z-m>
+        </center>
+        <axis>
+            <x>1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+
+</PropertyList>
