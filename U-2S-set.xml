@@ -21,7 +21,7 @@ Started April 11, 2011
     
         <description>Lockheed U-2S</description>
         
-        <aircraft-version>20140124</aircraft-version>
+        <aircraft-version>20140206</aircraft-version>
         
         <status>alpha</status>
         <rating>
@@ -494,7 +494,6 @@ Please see http://wiki.flightgear.org/Lockheed_U-2S for more information.
     <!-- Nasal -->
     
     <nasal>
-        
         <u2s>
             <file>Aircraft/U-2S/Nasal/u-2s.nas</file>
         </u2s>
@@ -503,10 +502,11 @@ Please see http://wiki.flightgear.org/Lockheed_U-2S for more information.
             <file>Aircraft/U-2S/Nasal/pogos.nas</file>
         </pogos>
         
+        <!-- temporarly disabled / currently not functional...
         <eject>
             <file>Aircraft/U-2S/Nasal/eject.nas</file>
         </eject>
-        
+        -->
     </nasal>
     
 <!-- End of Property List -->

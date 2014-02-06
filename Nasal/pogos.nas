@@ -12,136 +12,99 @@
 #
 ##
 
-# Trigger
+# Pogo
 
-var runloop = 1;
+var Pogo = {
+    init: func {
+        me.loopid = 1;
+        me.trigger(me.loopid);
+    },
+    trigger: func(id) {
+        if (me.loopid == id) {
+            # triggering by compression (this is not as reliable as airspeed but therefor more realistic) !
+            # (also triggering by wow could alternatively be tried)
+            var pogo_comp_ft = getprop(me.comp_prop) or 0.0;
+            
+            if (pogo_comp_ft <= 0.3) {
+                setprop(me.pogo_prop, 0);
+                setprop(me.subm_trig, 1); # (needed for the submodel, _has_ to be set true)
+                me.loopid += 1;
+            }
+            
+            # (debug-print)
+            print("Pogoloop is running!");
+            
+            settimer(func me.trigger(id), 0.3);
+        }
+    },
+    restore: func {
+        # check at the main gear if we're on ground
+        var on_ground = getprop("/gear/gear/wow" or 0);
+        if (on_ground) {
+            
+            # Stop trigger
+            me.loopid += 1;
+            
+            # Reset pogo properties
+            setprop(me.pogo_prop, 1);
+            setprop(me.subm_trig, 0);
+            
+            # (info-print)
+            print("Pogo restored.");
+            
+            # Rerun trigger
+            #me.runloop = 1;
+            # (give some time to let the compression props initiate)
+            settimer(func me.trigger(me.loopid), 5);
+        }
+        else { # (needed when resetting in the air !)
+            # Stop trigger
+            me.loopid += 1;
 
-var pogoloop = func {
-	
-	if (runloop) {
-		
-		#var altitude_ag = getprop("/position/altitude-agl-ft") or 0.0;
-		#var airspeed_kt = getprop("/velocities/airspeed-kt") or 0.0;
-		# triggering by compression (this is not as reliable as airspeed but therefor more realistic) !
-		# (also triggering by wow could alternatively be tried)
-		var pogo_right_comp_ft = getprop("/gear/gear[2]/compression-ft") or 0.0;
-		var pogo_left_comp_ft = getprop("/gear/gear[3]/compression-ft") or 0.0;
-		
-		#if (airspeed_kt >= 70.0) {
-		if (pogo_right_comp_ft <= 0.3) {
-		
-			setprop("/pogos/pogo-r-dropped", 1);			# trigger for animation / submodel
-			setprop("/pogos/pogo-r-down", 0);				# trigger for FDM
-			
-			# (debug-print)
-			#print("Pogo Right dropped!");
-			
-		}
-		
-		#if (airspeed_kt >= 75.0) {
-		if (pogo_left_comp_ft <= 0.3) {
-			
-			setprop("/pogos/pogo-l-dropped", 1);
-			setprop("/pogos/pogo-l-down", 0);
-			
-			# (debug-print)
-			#print("Pogo Left dropped!");
-			
-		}
-		
-		var pogo_rdropped = getprop("/pogos/pogo-r-dropped");
-		var pogo_ldropped = getprop("/pogos/pogo-l-dropped");
-		
-		if (pogo_rdropped and pogo_ldropped) {
-		
-			setprop("/pogos/pogos-dropped", 1);
-			
-			# (info-print)
-			print("Both pogos dropped!");
-			
-			runloop = 0;
-			
-			# (debug-print)
-			#print("Pogoloop stopped !");
-		}
-	
-	# (debug-print)
-	print("Pogoloop is running!");
-	
-	settimer(pogoloop, 0.3);
+            # Reset pogo properties
+            setprop(me.pogo_prop, 0);
+            setprop(me.subm_trig, 1);
+        }
+    },
+};
 
-	}
-}
+# Left and right pogo
+var pogo_R = { parents: [Pogo],
+                comp_prop: "/gear/gear[2]/compression-ft",
+                pogo_prop: "/pogos/pogo-r-down",
+                subm_trig: "/pogos/pogo-r-dropped",
+};
+
+var pogo_L = { parents: [Pogo],
+                comp_prop: "/gear/gear[3]/compression-ft",
+                pogo_prop: "/pogos/pogo-l-down",
+                subm_trig: "/pogos/pogo-l-dropped",
+};
 
 # Initial function
-# (needed to let the trigger props cleanly initiate)
 var run_timer = 1;
 var init_timer = func {
-	if (run_timer) {
-		var fdm_ready = getprop("/sim/fdm-initialized") or 0;
-		if (fdm_ready){
-			pogoloop();
-			run_timer = 0;
-		}
-		settimer(init_timer, 0.5);
-	}
+    if (run_timer) {
+        var fdm_ready = getprop("/sim/fdm-initialized") or 0;
+        if (fdm_ready){
+            pogo_R.init();
+            pogo_L.init();
+            run_timer = 0;
+        }
+        settimer(init_timer, 1.0);
+    }
 }
 
 init_timer();
-#pogoloop();
 
-# Reset function for the pogos
+# Restore function
 var reset_pogos = func {
-	# check at the main gear if we're on ground
-	var on_ground = getprop("/gear/gear/wow");
-	if (on_ground) {
-		
-		# Stop pogoloop
-		runloop = 0;
-		
-		# Reset all pogo properties
-		setprop("/pogos/pogo-r-down", 1);
-		setprop("/pogos/pogo-l-down", 1);
-		
-		setprop("/pogos/pogo-r-dropped", 0);
-		setprop("/pogos/pogo-l-dropped", 0);
-		
-		setprop("/pogos/pogos-dropped", 0);
-		
-		# (info-print)
-		print("Pogos restored.");
-		
-		# Rerun pogoloop
-		runloop = 1;
-		
-		#pogoloop();
-		# give some time to let the compression props initiate
-		settimer(pogoloop, 3);
-	}
-	
-	else {
-		# Stop pogoloop
-		runloop = 0;
-		
-		# Reset all pogo properties
-		setprop("/pogos/pogo-r-down", 0);
-		setprop("/pogos/pogo-l-down", 0);
-		
-		setprop("/pogos/pogo-r-dropped", 1);
-		setprop("/pogos/pogo-l-dropped", 1);
-		
-		setprop("/pogos/pogos-dropped", 1);
-	}
-	
+    pogo_R.restore();
+    pogo_L.restore();
 }
 
-# Set a listener on the system reset function and reset pogos
-setlistener("sim/signals/reinit", func {
-	# (debug-print)
-	print("Got reinit signal!");
-	# give some time to let the wow prop initiate (wow is quickly true, when resetting on ground!)
-	settimer(reset_pogos, 1);
-});
+# System reinit
+setlistener("sim/signals/reinit", reset_pogos );
 
 
 # Put a static model on the ground after the impact (done according to howto)
@@ -192,28 +155,4 @@ var pogor_gnd = func(n) {
 }
 
 setlistener("/impact/pogo-r-path", pogor_gnd);
-
-
-
-
-## Testing part below..
-
-# adding a model by nasal - test
-
-#var add_model = func {
-#	
-#	setprop ("models/model/path", "Aircraft/U-2S/Models/Test-Cube.xml");
-#	setprop ("models/model/longitude-deg-prop", "/position/longitude-deg");
-#	setprop ("models/model/latitude-deg-prop", "/position/latitude-deg");
-#	setprop ("models/model/elevation-ft-prop", "/position/altitude-ft");
-#	setprop ("models/model/heading-deg-prop", "/orientation/heading-deg");
-#	setprop ("models/model/pitch-deg-prop", "/orientation/pitch-deg");
-#	setprop ("models/model/roll-deg-prop", "/orientation/roll-deg");
-#	props.globals.getNode("models/model/load", 1);
-#
-#}
-#
-#add_model();
-
-
 

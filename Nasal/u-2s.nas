@@ -38,33 +38,45 @@ setlistener("/controls/engines/throttle-off", engine_cutoff);
 
 
 ## Beacon flash animation properties
-var beacon_flash = {
+var Blinker = {
+    init: func { 
+        me.loopid = 1;
+        me.switch(1); # (switching on automatically atm)
+    },
     on: func { setprop(me.prop, 1); },
     off: func { setprop(me.prop, 0); },
-    run: func {
-        if (me.runloop) {
+    run: func(id) {
+        if (me.loopid == id) {
                 settimer(func me.on(), me.ton);
                 settimer(func me.off(), me.toff);
-                settimer(func me.run(), me.trun);
+                settimer(func me.run(id), me.trun);
         }
     },
-    start: func(n) {
-        if (n.getValue() == 1) {
-            me.runloop = 1;
-            me.run();
+    switch: func(n) {
+        if (n == 1) {
+            me.loopid += 1;
+            me.run(me.loopid);
         }
         else {
-            me.runloop = 0;
+            me.loopid += 1;
         }
     },
 };
 
-var beacon1 = { parents: [beacon_flash], prop: "/controls/lighting/beacon-top-l-flash", ton: 0.7, toff: 1.0, trun: 1.1 };
-var beacon2 = { parents: [beacon_flash], prop: "/controls/lighting/beacon-top-r-flash", ton: 0.5, toff: 0.8, trun: 1.1 };
-var beacon3 = { parents: [beacon_flash], prop: "/controls/lighting/beacon-bottom-flash", ton: 0.1, toff: 0.4, trun: 1.1 };
+var beacon1 = { parents: [Blinker], prop: "/controls/lighting/beacon-top-l-flash", ton: 0.7, toff: 1.0, trun: 1.1 };
+var beacon2 = { parents: [Blinker], prop: "/controls/lighting/beacon-top-r-flash", ton: 0.5, toff: 0.8, trun: 1.1 };
+var beacon3 = { parents: [Blinker], prop: "/controls/lighting/beacon-bottom-flash", ton: 0.1, toff: 0.4, trun: 1.1 };
 
-setlistener("/controls/lighting/beacon", func(v) { beacon1.start(v);beacon2.start(v);beacon3.start(v); } );
-setprop("/controls/lighting/beacon", 1);
+beacon1.init();
+beacon2.init();
+beacon3.init();
+
+setlistener("/controls/lighting/beacon", func(v) { beacon1.switch(v.getValue());beacon2.switch(v.getValue());beacon3.switch(v.getValue()); } );
+
+#setprop("/controls/lighting/beacon", 1);
+
+# stop at reinit
+#setlistener("/sim/signals/reinit", func(v) { beacon1.switch(0);beacon2.switch(0);beacon3.switch(0); } );
 
 
 ## Set additional pushed properties

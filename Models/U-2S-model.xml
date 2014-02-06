@@ -97,9 +97,7 @@ when registering it's completely transparent wich is not what I want
   <object-name>Pogo_L</object-name>
   <object-name>Pogo_L-Wheel</object-name>
   <condition>
-   <not>
-    <property>pogos/pogo-l-dropped</property>
-   </not>
+    <property>pogos/pogo-l-down</property>
   </condition>
  </animation>
 
@@ -108,9 +106,7 @@ when registering it's completely transparent wich is not what I want
   <object-name>Pogo_R</object-name>
   <object-name>Pogo_R-Wheel</object-name>
   <condition>
-   <not>
-    <property>pogos/pogo-r-dropped</property>
-   </not>
+    <property>pogos/pogo-r-down</property>
   </condition>
  </animation>
 
