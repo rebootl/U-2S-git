@@ -71,5 +71,18 @@ Main cockpit file
             <z-m>1.833</z-m>
         </offsets>
     </model>
+    
+    <!-- engine indicators (analog backup) -->
+    <model>
+        <path>eng-ind.xml</path>
+        <offsets>
+            <pitch-deg>0</pitch-deg>
+            <heading-deg>0</heading-deg>
+            <roll-deg>0</roll-deg>
+            <x-m>-6.320</x-m>
+            <y-m>0.091</y-m>
+            <z-m>1.503</z-m>
+        </offsets>
+    </model>
 
 </PropertyList>

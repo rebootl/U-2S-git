@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!-- 
+*****************************************************
+This file is part of U-2S.
+
+Copyright 2014 Cem Aydin
+(See Licensing for detailed information.)
+
+Lockheed U-2S for FlightGear flight simulator
+
+*****************************************************
+
+Engine indicators (analog backup)
+=================
+
+(cr. 2014-02-07)
+-->
+<PropertyList>
+    
+    <path>eng-ind.ac</path>
+
+    <!-- N2 % RPM -->
+    <animation>
+        <type>rotate</type>
+        <object-name>eng-ind-n2-needle</object-name>
+        <property>engines/engine/n2</property>
+        <interpolation>
+            <entry><ind>0</ind><dep>0</dep></entry>
+            <entry><ind>120</ind><dep>200</dep></entry>
+        </interpolation>
+        <center>
+            <x-m>0.0</x-m>
+            <y-m>0.0</y-m>
+            <z-m>0.0</z-m>
+        </center>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    
+    <!-- EGT (deg) C -->
+    <animation>
+        <type>rotate</type>
+        <object-name>eng-ind-egt-needle</object-name>
+        <property>engines/engine/egt-degf</property>
+        <interpolation>
+            <entry><ind>32.0</ind><dep>0</dep></entry> <!-- 0 deg C -->
+            <entry><ind>2192.0</ind><dep>200</dep></entry> <!-- 1200 deg C -->
+        </interpolation>
+        <center>
+            <x-m>0.0</x-m>
+            <y-m>0.0765</y-m>
+            <z-m>0.0</z-m>
+        </center>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+    
+    <!-- GPH x100 -->
+    <animation>
+        <type>rotate</type>
+        <object-name>eng-ind-gph-needle</object-name>
+        <property>fdm/jsbsim/propulsion/engine/fuel-flow-rate-gph</property>
+        <interpolation>
+            <entry><ind>0</ind><dep>0</dep></entry>
+            <entry><ind>400</ind><dep>96</dep></entry>
+            <entry><ind>2000</ind><dep>192</dep></entry>
+        </interpolation>
+        <center>
+            <x-m>0.0</x-m>
+            <y-m>0.0765</y-m>
+            <z-m>-0.083</z-m>
+        </center>
+        <axis>
+            <x>-1</x>
+            <y>0</y>
+            <z>0</z>
+        </axis>
+    </animation>
+
+</PropertyList>
