@@ -28,11 +28,14 @@ var Pogo = {
             if (pogo_comp_ft <= 0.3) {
                 setprop(me.pogo_prop, 0);
                 setprop(me.subm_trig, 1); # (needed for the submodel, _has_ to be set true)
+                # (info-print)
+                print("Pogo dropped.");
+
                 me.loopid += 1;
             }
             
             # (debug-print)
-            print("Pogoloop is running!");
+            #print("Pogoloop is running!");
             
             settimer(func me.trigger(id), 0.3);
         }
@@ -108,51 +111,47 @@ setlistener("sim/signals/reinit", reset_pogos );
 
 
 # Put a static model on the ground after the impact (done according to howto)
+#
+# Unfortunately this only works once, even resetting the impact path property,
+# doesn't seem to help... currently not worth doing more...
+
 # Left Pogo
-
-var pogol_node = props.globals.getNode("/impact/pogo-l-path", 1); 			# not really necessary, what for ? get the path of impact data
-
-var pogol_gnd = func(n) { 					 						# what is in this n ?
+# what is in this n ? ==> the property from setlistener!
+var pogol_gnd = func(n) {
 	
-	var pogol = pogol_node.getValue();								# and... not really necessary, what for ? get the path of impact data
 	var node = props.globals.getNode(n.getValue(), 1);
 	
 	geo.put_model("Aircraft/U-2S/Models/Pogo_L-dropped.xml",
 		node.getNode("impact/latitude-deg").getValue(),
 		node.getNode("impact/longitude-deg").getValue(),
-		node.getNode("impact/elevation-m").getValue()+ 0.25, 				#+0.25 to ensure the pogo isn't buried
+        #+0.25 to ensure the pogo isn't buried
+		node.getNode("impact/elevation-m").getValue()+ 0.25,
 		node.getNode("impact/heading-deg").getValue(),
 		0,
 		0
 		);
-		
-	#print("Pogo Left put on ground.");									# Debug-Info
-	
-}
 
+    # (debug/info print)
+    print("Pogo Left put on ground.");
+}
 setlistener("/impact/pogo-l-path", pogol_gnd);
 
 # Right Pogo
-
-var pogor_node = props.globals.getNode("/impact/pogo-r-path", 1);
-
 var pogor_gnd = func(n) {
 	
-	var pogor = pogor_node.getValue();								
 	var node = props.globals.getNode(n.getValue(), 1);
 	
 	geo.put_model("Aircraft/U-2S/Models/Pogo_R-dropped.xml",
 		node.getNode("impact/latitude-deg").getValue(),
 		node.getNode("impact/longitude-deg").getValue(),
-		node.getNode("impact/elevation-m").getValue()+ 0.25, 				#+0.25 to ensure the pogo isn't buried
+        #+0.25 to ensure the pogo isn't buried
+		node.getNode("impact/elevation-m").getValue()+ 0.25,
 		node.getNode("impact/heading-deg").getValue(),
 		0,
 		0
 		);
-		
-	#print("Pogo Right put on ground.");									# Debug-Info
-	
+
+    # (debug/info print)
+	print("Pogo Right put on ground.");
 }
-
 setlistener("/impact/pogo-r-path", pogor_gnd);
-
